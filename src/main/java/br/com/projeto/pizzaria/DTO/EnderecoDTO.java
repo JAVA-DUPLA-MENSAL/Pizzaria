@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class EnderecoDTO {
 
-    private Long id;
+   // private Long id;
 
     private String rua;
 
