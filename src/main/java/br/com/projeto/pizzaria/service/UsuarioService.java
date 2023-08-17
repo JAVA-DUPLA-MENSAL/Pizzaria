@@ -5,6 +5,7 @@ import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,23 @@ public class UsuarioService {
         return usuarioDTOList;
     }
 
+    public String editar(Long id,UsuarioDTO usuarioDTO){
+        Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
+
+        Assert.isTrue(usuarioBanco != null, "Usuario nao encontrado");
+        usuarioRepository.save(toUsuario(usuarioDTO));
+
+        return usuarioDTO.getNome() + " editado com sucesso";
+    }
+
+    public String deletar(Long id){
+        Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
+
+        Assert.isTrue(usuarioBanco != null, "Usuario nao encontrado");
+        usuarioRepository.delete(usuarioBanco);
+
+        return "usuario deletado";
+    }
 
     public Usuario toUsuario(UsuarioDTO usuarioDTO){
 

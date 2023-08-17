@@ -36,4 +36,22 @@ public class UsuarioController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
+
+    @PutMapping("/editar")
+    public ResponseEntity<String> editar(@RequestParam("id")Long id,@RequestBody UsuarioDTO  usuarioDTO){
+        try{
+           return ResponseEntity.ok(usuarioService.editar(id,usuarioDTO));
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    public ResponseEntity<String> deletar(@RequestParam("id")Long id){
+        try{
+           return ResponseEntity.ok(usuarioService.deletar(id));
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
 }
