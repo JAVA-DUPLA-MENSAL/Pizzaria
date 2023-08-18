@@ -32,7 +32,7 @@ public class EnderecoController {
     }
 
     @GetMapping("/todos")
-    public ResponseEntity<List<EnderecoDTO>> buscarEnderecos(@RequestBody final EnderecoDTO enderecoDTO){
+    public ResponseEntity<List<EnderecoDTO>> buscarEnderecos(){
         try{
            return ResponseEntity.ok(enderecoService.findAllEnderecos());
         }catch (Exception e){
