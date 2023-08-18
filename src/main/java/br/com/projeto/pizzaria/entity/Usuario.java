@@ -29,5 +29,6 @@ public class Usuario {
     @OneToMany
     private List<Endereco> enderecos;
 
-
+    @OneToOne(mappedBy = "usuario")
+    private Login login;
 }

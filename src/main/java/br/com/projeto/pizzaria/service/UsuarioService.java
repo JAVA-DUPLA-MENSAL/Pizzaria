@@ -21,6 +21,18 @@ public class UsuarioService {
 
     }
 
+    public List<UsuarioDTO> findByNome(String nome){
+        List<Usuario> usuarioBanco = this.usuarioRepository.findPessoaByNome(nome);
+        List<UsuarioDTO> usuarioDTOList = new ArrayList<>();
+
+        for(int i = 0; i < usuarioBanco.size(); i++){
+            usuarioDTOList.add(toUsuarioDTO(usuarioBanco.get(i)));
+        }
+
+        return usuarioDTOList;
+    }
+
+
     public List<UsuarioDTO> findAllUsuarios(){
         List<Usuario> usuariosBanco = usuarioRepository.findAll();
         List<UsuarioDTO> usuarioDTOList = new ArrayList<>();

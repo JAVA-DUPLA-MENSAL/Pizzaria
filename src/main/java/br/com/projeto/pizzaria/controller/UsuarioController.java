@@ -37,7 +37,16 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/editar")
+    @GetMapping("/buscar/{nome}")
+    public ResponseEntity<List<UsuarioDTO>> buscarNome(@RequestParam("nome")String nome){
+        try{
+            return ResponseEntity.ok(usuarioService.findByNome(nome));
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @PutMapping("/editar/{id}")
     public ResponseEntity<String> editar(@RequestParam("id")Long id,@RequestBody UsuarioDTO  usuarioDTO){
         try{
            return ResponseEntity.ok(usuarioService.editar(id,usuarioDTO));
@@ -46,6 +55,7 @@ public class UsuarioController {
         }
     }
 
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletar(@RequestParam("id")Long id){
         try{
            return ResponseEntity.ok(usuarioService.deletar(id));

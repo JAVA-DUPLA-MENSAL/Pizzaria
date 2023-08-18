@@ -11,5 +11,5 @@ import java.util.List;
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     @Query(value = "SELECT p FROM Usuario p where p.nome = :nome")
-    List<Pedido> findPessoaByNome(@Param("nome")final String nome);
+    List<Usuario> findPessoaByNome(@Param("nome")final String nome);
 }
