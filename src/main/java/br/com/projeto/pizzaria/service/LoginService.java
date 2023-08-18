@@ -6,6 +6,7 @@ import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class LoginService {
     }
 
     public List<LoginDTO> findByNome(String nome){
-        List<Login> loginList = loginRepository.findByName(nome);
+        List<Login> loginList = loginRepository.findUserNameByNomeDeLogin(nome);
         List<LoginDTO> loginDTOList = new ArrayList<>();
 
         for(int i = 0; i < loginList.size(); i++){
@@ -45,6 +46,26 @@ public class LoginService {
         return loginDTOList;
     }
 
+    public LoginDTO editar(Long id, LoginDTO loginDTO){
+        Login loginBanco = this.loginRepository.findById(id).orElse(null);
+
+        Assert.isTrue(loginBanco != null, "Login nao encontrado");
+        //fazer verificacoes
+
+       Login login = loginRepository.save(toLogin(loginDTO));
+
+        return toLoginDTO(login);
+    }
+
+    public String deletar(Long id){
+        Login loginBanco = this.loginRepository.findById(id).orElse(null);
+
+        Assert.isTrue(loginBanco != null, "Login nao encontrado");
+
+        loginRepository.delete(loginBanco);
+
+        return "Login deletado com sucesso";
+    }
 
     public Login toLogin(LoginDTO loginDTO){
         Login login = new Login();
