@@ -30,9 +30,27 @@ public class LoginController {
     @GetMapping("/todos")
     public ResponseEntity<List<LoginDTO>> buscarTodos(){
         try{
-
+            return ResponseEntity.ok(loginService.buscarTodos());
         }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
+    @PutMapping
+    public ResponseEntity<LoginDTO> editar(@RequestParam("id") Long id, @RequestBody LoginDTO loginDTO){
+        try{
+            return ResponseEntity.ok(loginService.editar(id,loginDTO));
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/deletar")
+    public ResponseEntity<String> deletar(@RequestParam("id")Long id){
+        try{
+            return ResponseEntity.ok(loginService.deletar(id));
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
