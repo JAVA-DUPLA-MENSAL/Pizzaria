@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 public class LoginDTO {
 
+    private Long id;
+
     private String email;
 
     private String senha;
@@ -18,7 +20,8 @@ public class LoginDTO {
 
     }
 
-    public LoginDTO(String email, String senha, Usuario usuario) {
+    public LoginDTO(Long id, String email, String senha, Usuario usuario) {
+        this.id = id;
         this.email = email;
         this.senha = senha;
         this.usuario = usuario;

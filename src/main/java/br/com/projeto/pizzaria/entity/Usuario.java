@@ -1,6 +1,7 @@
 package br.com.projeto.pizzaria.entity;
 
 import br.com.projeto.pizzaria.DTO.EnderecoDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,10 @@ public class Usuario {
     @Column(name = "CPF")
     private String CPF;
 
-    @OneToMany
+
+    //@Column(name = "endereco_fk")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos;
 
     @OneToOne(mappedBy = "usuario")

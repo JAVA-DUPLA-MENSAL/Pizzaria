@@ -16,9 +16,10 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public void criar(UsuarioDTO usuarioDTO){
-        this.usuarioRepository.save(toUsuario(usuarioDTO));
+    public UsuarioDTO criar(UsuarioDTO usuarioDTO){
+       Usuario usuario =  this.usuarioRepository.save(toUsuario(usuarioDTO));
 
+       return toUsuarioDTO(usuario);
     }
 
     public List<UsuarioDTO> findByNome(String nome){
@@ -66,6 +67,7 @@ public class UsuarioService {
 
         Usuario usuario = new Usuario();
 
+        usuario.setId(usuarioDTO.getId());
         usuario.setCPF(usuarioDTO.getCPF());
         usuario.setNome(usuarioDTO.getNome());
         usuario.setTelefone(usuarioDTO.getTelefone());
@@ -77,6 +79,7 @@ public class UsuarioService {
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
 
+        usuarioDTO.setId(usuario.getId());
         usuarioDTO.setCPF(usuario.getCPF());
         usuarioDTO.setNome(usuario.getNome());
         usuarioDTO.setTelefone(usuario.getTelefone());

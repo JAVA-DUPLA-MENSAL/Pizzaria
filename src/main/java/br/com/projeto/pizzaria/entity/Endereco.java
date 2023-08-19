@@ -1,6 +1,7 @@
 package br.com.projeto.pizzaria.entity;
 
 import br.com.projeto.pizzaria.DTO.UsuarioDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +22,9 @@ public class Endereco {
     @Column(name = "num_casa")
     private int numCasa;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "endereco_fk")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     public Endereco(){

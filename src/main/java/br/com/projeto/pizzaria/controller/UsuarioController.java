@@ -19,10 +19,9 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> criar(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<UsuarioDTO> criar(@RequestBody UsuarioDTO usuarioDTO){
         try{
-            usuarioService.criar(usuarioDTO);
-            return ResponseEntity.ok("Usuario cadastrado");
+            return ResponseEntity.ok( usuarioService.criar(usuarioDTO));
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

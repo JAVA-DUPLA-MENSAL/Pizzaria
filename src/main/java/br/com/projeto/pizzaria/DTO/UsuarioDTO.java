@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class UsuarioDTO {
 
-    //private Long id;
+    private Long id;
 
     private String nome;
 

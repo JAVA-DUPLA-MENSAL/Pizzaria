@@ -24,7 +24,6 @@ public class LoginService {
         return toLoginDTO(login);
     }
 
-
     public List<LoginDTO> buscarTodos(){
         List<Login> loginListBanco = loginRepository.findAll();
         List<LoginDTO> loginDTOList = new ArrayList<>();
@@ -70,6 +69,7 @@ public class LoginService {
     public Login toLogin(LoginDTO loginDTO){
         Login login = new Login();
 
+        login.setId(loginDTO.getId());
         login.setEmail(loginDTO.getEmail());
         login.setSenha(loginDTO.getSenha());
         login.setUsuario(loginDTO.getUsuario());
@@ -80,6 +80,7 @@ public class LoginService {
     public LoginDTO toLoginDTO(Login login){
         LoginDTO loginDTO = new LoginDTO();
 
+        loginDTO.setId(login.getId());
         loginDTO.setEmail(login.getEmail());
         loginDTO.setSenha(login.getSenha());
         loginDTO.setUsuario(login.getUsuario());
