@@ -1,6 +1,8 @@
 package br.com.projeto.pizzaria.service;
 
+import br.com.projeto.pizzaria.DTO.EnderecoDTO;
 import br.com.projeto.pizzaria.DTO.UsuarioDTO;
+import br.com.projeto.pizzaria.entity.Endereco;
 import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,10 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EnderecoService enderecoService;
+
 
     public UsuarioDTO criar(UsuarioDTO usuarioDTO){
        Usuario usuario =  this.usuarioRepository.save(toUsuario(usuarioDTO));
@@ -71,7 +77,17 @@ public class UsuarioService {
         usuario.setCPF(usuarioDTO.getCPF());
         usuario.setNome(usuarioDTO.getNome());
         usuario.setTelefone(usuarioDTO.getTelefone());
-        usuario.setEnderecos(usuarioDTO.getEnderecos());
+
+        List<Endereco> enderecos = new ArrayList<>();
+        for (Endereco enderecoDTO : usuarioDTO.getEnderecos()) {
+            Endereco endereco = new Endereco();
+            endereco.setRua(enderecoDTO.getRua());
+            endereco.setNumCasa(enderecoDTO.getNumCasa());
+            endereco.setUsuario(usuario); // Associe o usuário ao endereço
+            enderecos.add(endereco);
+        }
+        usuario.setEnderecos(enderecos);
+
         return usuario;
     }
 

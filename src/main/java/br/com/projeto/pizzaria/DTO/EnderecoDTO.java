@@ -27,4 +27,7 @@ public class EnderecoDTO {
         this.usuario=usuarioDTO;
     }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

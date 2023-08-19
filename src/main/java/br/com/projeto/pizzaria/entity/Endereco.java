@@ -31,5 +31,7 @@ public class Endereco {
 
     }
 
-
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }
