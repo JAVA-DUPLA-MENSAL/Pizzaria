@@ -1,10 +1,12 @@
 package br.com.projeto.pizzaria.entity;
 
 import br.com.projeto.pizzaria.DTO.EnderecoDTO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 
@@ -29,8 +31,9 @@ public class Usuario {
 
 
     //@Column(name = "endereco_fk")
-    @JsonManagedReference
-    @OneToMany(mappedBy = "usuario")
+    //@JsonManagedReference
+    @JsonIgnoreProperties("usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Endereco> enderecos;
 
     @OneToOne(mappedBy = "usuario")

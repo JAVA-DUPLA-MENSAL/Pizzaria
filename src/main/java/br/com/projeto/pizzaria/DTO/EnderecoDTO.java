@@ -1,6 +1,7 @@
 package br.com.projeto.pizzaria.DTO;
 
 import br.com.projeto.pizzaria.entity.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,19 +10,21 @@ import lombok.Setter;
 @Setter
 public class EnderecoDTO {
 
-   // private Long id;
+    private Long id;
 
     private String rua;
 
     private int numCasa;
 
+    @JsonIgnoreProperties("enderecos")
     private Usuario usuario;
 
     public EnderecoDTO(){
 
     }
 
-    public EnderecoDTO(String rua, int numCasa, Usuario usuarioDTO){
+    public EnderecoDTO(Long id, String rua, int numCasa, Usuario usuarioDTO){
+        this.id=id;
         this.rua=rua;
         this.numCasa=numCasa;
         this.usuario=usuarioDTO;

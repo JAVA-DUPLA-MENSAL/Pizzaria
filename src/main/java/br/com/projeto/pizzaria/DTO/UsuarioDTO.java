@@ -1,6 +1,7 @@
 package br.com.projeto.pizzaria.DTO;
 
 import br.com.projeto.pizzaria.entity.Endereco;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +21,14 @@ public class UsuarioDTO {
 
     private String CPF;
 
-    private List<Endereco> enderecos;
+    @JsonIgnoreProperties("usuario")
+    private List<EnderecoDTO> enderecos;
 
     public UsuarioDTO(){
 
     }
 
-    public UsuarioDTO( String nome, String telefone, String CPF, List<Endereco> enderecos) {
+    public UsuarioDTO( String nome, String telefone, String CPF, List<EnderecoDTO> enderecos) {
         this.nome = nome;
         this.telefone = telefone;
         this.CPF = CPF;

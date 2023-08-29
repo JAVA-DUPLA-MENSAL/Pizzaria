@@ -52,18 +52,20 @@ public class EnderecoService {
     public EnderecoDTO toEnderecoDTO(Endereco endereco){
         EnderecoDTO enderecoDTO1 = new EnderecoDTO();
 
+        enderecoDTO1.setId(endereco.getId());
         enderecoDTO1.setRua(endereco.getRua());
         enderecoDTO1.setNumCasa(endereco.getNumCasa());
+        enderecoDTO1.setUsuario(endereco.getUsuario());
 
         return enderecoDTO1;
     }
 
     public Endereco toEndereco(EnderecoDTO enderecoDTO){
         Endereco endereco = new Endereco();
-
+        endereco.setId(enderecoDTO.getId());
         endereco.setRua(enderecoDTO.getRua());
         endereco.setNumCasa(enderecoDTO.getNumCasa());
-
+        endereco.setUsuario(enderecoDTO.getUsuario());
         return endereco;
     }
 }
