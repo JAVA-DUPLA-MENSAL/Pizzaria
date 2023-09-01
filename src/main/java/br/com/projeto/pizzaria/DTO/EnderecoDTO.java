@@ -17,13 +17,13 @@ public class EnderecoDTO {
     private int numCasa;
 
     @JsonIgnoreProperties("enderecos")
-    private Usuario usuario;
+    private UsuarioDTO usuario;
 
     public EnderecoDTO(){
 
     }
 
-    public EnderecoDTO(Long id, String rua, int numCasa, Usuario usuarioDTO){
+    public EnderecoDTO(Long id, String rua, int numCasa, UsuarioDTO usuarioDTO){
         this.id=id;
         this.rua=rua;
         this.numCasa=numCasa;

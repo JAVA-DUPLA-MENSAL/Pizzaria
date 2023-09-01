@@ -1,7 +1,9 @@
 package br.com.projeto.pizzaria.service;
 
 import br.com.projeto.pizzaria.DTO.EnderecoDTO;
+import br.com.projeto.pizzaria.DTO.UsuarioDTO;
 import br.com.projeto.pizzaria.entity.Endereco;
+import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class EnderecoService {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+
 
     public void criar(EnderecoDTO enderecoDTO){
         //fazer validacoes antes de salvar
@@ -55,7 +58,7 @@ public class EnderecoService {
         enderecoDTO1.setId(endereco.getId());
         enderecoDTO1.setRua(endereco.getRua());
         enderecoDTO1.setNumCasa(endereco.getNumCasa());
-        enderecoDTO1.setUsuario(endereco.getUsuario());
+        enderecoDTO1.setUsuario(toUsuarioDTO(endereco.getUsuario()));
 
         return enderecoDTO1;
     }
@@ -65,7 +68,56 @@ public class EnderecoService {
         endereco.setId(enderecoDTO.getId());
         endereco.setRua(enderecoDTO.getRua());
         endereco.setNumCasa(enderecoDTO.getNumCasa());
-        endereco.setUsuario(enderecoDTO.getUsuario());
+        endereco.setUsuario(toUsuario(enderecoDTO.getUsuario()));
         return endereco;
+    }
+
+
+    public Usuario toUsuario(UsuarioDTO usuarioDTO){
+
+        Usuario usuario = new Usuario();
+
+        usuario.setId(usuarioDTO.getId());
+        usuario.setCPF(usuarioDTO.getCPF());
+        usuario.setNome(usuarioDTO.getNome());
+        usuario.setTelefone(usuarioDTO.getTelefone());
+
+        List<Endereco> dump = new ArrayList<>();
+
+        if(usuarioDTO.getEnderecos() != null){
+            for(int i = 0; i < usuarioDTO.getEnderecos().size(); i++){
+                Endereco aux = toEndereco(usuarioDTO.getEnderecos().get(i));
+                aux.setUsuario(usuario);
+                dump.add(aux);
+                dump.forEach(e ->{
+                    System.out.println(e.getId());
+                });
+
+            }
+        }
+
+        usuario.setEnderecos(dump);
+        return usuario;
+    }
+
+    public UsuarioDTO toUsuarioDTO(Usuario usuario){
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+        usuarioDTO.setId(usuario.getId());
+        usuarioDTO.setCPF(usuario.getCPF());
+        usuarioDTO.setNome(usuario.getNome());
+        usuarioDTO.setTelefone(usuario.getTelefone());
+
+
+        List<EnderecoDTO> dump = new ArrayList<>();
+
+        if(usuario.getEnderecos() != null){
+            for(int i =0; i < usuario.getEnderecos().size(); i++){
+                dump.add(toEnderecoDTO(usuario.getEnderecos().get(i)));
+            }
+        }
+        usuarioDTO.setEnderecos(dump);
+        return usuarioDTO;
     }
 }

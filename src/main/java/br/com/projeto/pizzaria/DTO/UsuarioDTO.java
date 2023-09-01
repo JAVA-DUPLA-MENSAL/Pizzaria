@@ -28,7 +28,8 @@ public class UsuarioDTO {
 
     }
 
-    public UsuarioDTO( String nome, String telefone, String CPF, List<EnderecoDTO> enderecos) {
+    public UsuarioDTO( Long id, String nome, String telefone, String CPF, List<EnderecoDTO> enderecos) {
+        this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.CPF = CPF;
