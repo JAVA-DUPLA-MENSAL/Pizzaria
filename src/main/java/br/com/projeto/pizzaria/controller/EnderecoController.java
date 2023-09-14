@@ -22,10 +22,9 @@ public class EnderecoController {
 
 
     @PostMapping("/criar")
-    public ResponseEntity<String> criar(@RequestBody final EnderecoDTO enderecoDTO){
+    public ResponseEntity<EnderecoDTO> criar(@RequestBody final EnderecoDTO enderecoDTO){
         try{
-            enderecoService.criar(enderecoDTO);
-            return  ResponseEntity.ok("Endereço, cadastrado");
+            return  ResponseEntity.ok(enderecoService.criar(enderecoDTO));
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

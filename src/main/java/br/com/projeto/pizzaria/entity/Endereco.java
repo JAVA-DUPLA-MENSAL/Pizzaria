@@ -4,6 +4,7 @@ import br.com.projeto.pizzaria.DTO.UsuarioDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,9 +18,11 @@ public class Endereco {
     @Column(name = "id")
     private Long id;
 
+    @NotNull(message = "Rua nao pode ser nulo")
     @Column(name = "rua")
     private String rua;
 
+    @NotNull(message = "Numero da casa nao pode ser nulo")
     @Column(name = "num_casa")
     private int numCasa;
 
@@ -27,6 +30,7 @@ public class Endereco {
     @JsonIgnoreProperties("enderecos")
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @NotNull(message = "Usuario nao pode ser nulo")
     private Usuario usuario;
 
     public Endereco(){
