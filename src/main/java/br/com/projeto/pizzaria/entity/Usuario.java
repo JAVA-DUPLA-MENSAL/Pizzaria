@@ -1,12 +1,10 @@
 package br.com.projeto.pizzaria.entity;
 
-import br.com.projeto.pizzaria.DTO.EnderecoDTO;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 
@@ -27,8 +25,7 @@ public class Usuario {
     private String telefone;
 
     @Column(name = "CPF")
-    private String CPF;
-
+    private String cpf;
 
     //@Column(name = "endereco_fk")
     //@JsonManagedReference
@@ -38,4 +35,15 @@ public class Usuario {
 
     @OneToOne(mappedBy = "usuario")
     private Login login;
+
+    public Usuario(){
+
+    }
+
+    public Usuario(Long id, String nome, String telefone, String cpf) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cpf = cpf;
+    }
 }

@@ -1,7 +1,7 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.EnderecoDTO;
-import br.com.projeto.pizzaria.DTO.UsuarioDTO;
+import br.com.projeto.pizzaria.dto.EnderecoDTO;
+import br.com.projeto.pizzaria.dto.UsuarioDTO;
 import br.com.projeto.pizzaria.entity.Endereco;
 import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.EnderecoRepository;
@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EnderecoService {
@@ -21,8 +20,6 @@ public class EnderecoService {
 
 
     public void criar(EnderecoDTO enderecoDTO){
-        //fazer validacoes antes de salvar
-
         this.enderecoRepository.save(toEndereco(enderecoDTO));
     }
 
@@ -38,7 +35,7 @@ public class EnderecoService {
     }
 
     public void editar(Long id,EnderecoDTO enderecoDTO){
-        //fazer validacoes entes d esalvar
+
         Endereco enderecoBanco = this.enderecoRepository.findById(id).orElse(null);
 
         Assert.isTrue(enderecoBanco != null, "Endereco nao encontrado");
@@ -78,7 +75,7 @@ public class EnderecoService {
         Usuario usuario = new Usuario();
 
         usuario.setId(usuarioDTO.getId());
-        usuario.setCPF(usuarioDTO.getCPF());
+        usuario.setCpf(usuarioDTO.getCpf());
         usuario.setNome(usuarioDTO.getNome());
         usuario.setTelefone(usuarioDTO.getTelefone());
 
@@ -89,13 +86,8 @@ public class EnderecoService {
                 Endereco aux = toEndereco(usuarioDTO.getEnderecos().get(i));
                 aux.setUsuario(usuario);
                 dump.add(aux);
-                dump.forEach(e ->{
-                    System.out.println(e.getId());
-                });
-
             }
         }
-
         usuario.setEnderecos(dump);
         return usuario;
     }
@@ -105,7 +97,7 @@ public class EnderecoService {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
 
         usuarioDTO.setId(usuario.getId());
-        usuarioDTO.setCPF(usuario.getCPF());
+        usuarioDTO.setCpf(usuario.getCpf());
         usuarioDTO.setNome(usuario.getNome());
         usuarioDTO.setTelefone(usuario.getTelefone());
 

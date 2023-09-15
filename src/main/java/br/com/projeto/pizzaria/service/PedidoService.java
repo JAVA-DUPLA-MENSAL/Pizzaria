@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.PedidoDTO;
+import br.com.projeto.pizzaria.dto.PedidoDTO;
 import br.com.projeto.pizzaria.entity.Pedido;
 import br.com.projeto.pizzaria.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,9 @@ public class PedidoService {
 
 
     public PedidoDTO criar(PedidoDTO pedidoDTO){
-        //fazer verificacoes
        Pedido pedido = this.pedidoRepository.save(toPedido(pedidoDTO));
 
        return toPedidoDTO(pedido);
-       //return "Pedido Criado";
     }
 
     public PedidoDTO findById(Long id){
@@ -46,7 +44,6 @@ public class PedidoService {
         Pedido pedido = this.pedidoRepository.findById(id).orElse(null);
 
         Assert.isTrue(pedido != null, "Pedido nao encontrado");
-        //fazer verificacoes
 
         this.pedidoRepository.save(toPedido(pedidoDTO));
 

@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.SaboresDTO;
+import br.com.projeto.pizzaria.dto.SaboresDTO;
 import br.com.projeto.pizzaria.entity.Sabores;
 import br.com.projeto.pizzaria.repository.SaboresRepository;
 import org.springframework.beans.factory.annotation.Autowired;

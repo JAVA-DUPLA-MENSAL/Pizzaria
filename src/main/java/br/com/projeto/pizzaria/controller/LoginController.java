@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.controller;
 
-import br.com.projeto.pizzaria.DTO.LoginDTO;
+import br.com.projeto.pizzaria.dto.LoginDTO;
 import br.com.projeto.pizzaria.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

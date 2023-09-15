@@ -1,8 +1,8 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.LoginDTO;
+import br.com.projeto.pizzaria.dto.LoginDTO;
+import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.entity.Login;
-import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,9 @@ public class LoginService {
 
     @Autowired
     private LoginRepository loginRepository;
+
+    @Autowired
+    private UsuarioDTOConvert usuarioDTOConvert;
 
     public LoginDTO criar(LoginDTO loginDTO){
 
@@ -72,7 +75,7 @@ public class LoginService {
         login.setId(loginDTO.getId());
         login.setEmail(loginDTO.getEmail());
         login.setSenha(loginDTO.getSenha());
-        login.setUsuario(loginDTO.getUsuario());
+        login.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(loginDTO.getUsuarioDTO()));
 
         return login;
     }
@@ -83,7 +86,7 @@ public class LoginService {
         loginDTO.setId(login.getId());
         loginDTO.setEmail(login.getEmail());
         loginDTO.setSenha(login.getSenha());
-        loginDTO.setUsuario(login.getUsuario());
+        loginDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(login.getUsuario()));
 
         return loginDTO;
     }

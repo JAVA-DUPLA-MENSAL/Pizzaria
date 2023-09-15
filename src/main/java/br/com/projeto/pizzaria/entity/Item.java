@@ -16,11 +16,14 @@ public class Item {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
     private String tamanho;
 
     private Boolean entrega;
+
+
     @ManyToMany
     @JoinTable(name = "item_sabores",
       joinColumns = @JoinColumn(name = "item_fk"),

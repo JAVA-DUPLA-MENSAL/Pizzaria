@@ -1,7 +1,5 @@
 package br.com.projeto.pizzaria.entity;
 
-import br.com.projeto.pizzaria.DTO.UsuarioDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,8 +28,13 @@ public class Endereco {
     private Usuario usuario;
 
     public Endereco(){
-
+        //Necessario para criar uma instancia.
     }
 
-
+    public Endereco(Long id, String rua, int numCasa, Usuario usuario) {
+        this.id = id;
+        this.rua = rua;
+        this.numCasa = numCasa;
+        this.usuario = usuario;
+    }
 }

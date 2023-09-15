@@ -1,8 +1,6 @@
-package br.com.projeto.pizzaria.DTO;
+package br.com.projeto.pizzaria.dto;
 
-import br.com.projeto.pizzaria.entity.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 

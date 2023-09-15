@@ -1,7 +1,6 @@
 package br.com.projeto.pizzaria.controller;
 
-import br.com.projeto.pizzaria.DTO.UsuarioDTO;
-import br.com.projeto.pizzaria.entity.Usuario;
+import br.com.projeto.pizzaria.dto.UsuarioDTO;
 import br.com.projeto.pizzaria.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

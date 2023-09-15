@@ -1,7 +1,6 @@
 package br.com.projeto.pizzaria.controller;
 
-import br.com.projeto.pizzaria.DTO.ItemDTO;
-import br.com.projeto.pizzaria.DTO.SaboresDTO;
+import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

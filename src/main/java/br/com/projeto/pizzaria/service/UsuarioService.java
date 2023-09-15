@@ -1,9 +1,7 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.EnderecoDTO;
-import br.com.projeto.pizzaria.DTO.UsuarioDTO;
+import br.com.projeto.pizzaria.dto.UsuarioDTO;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
-import br.com.projeto.pizzaria.entity.Endereco;
 import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 public class UsuarioService {
@@ -27,12 +26,9 @@ public class UsuarioService {
 
     public UsuarioDTO criar(UsuarioDTO usuarioDTO){
 
-        System.out.println("1 "+usuarioDTO.getEnderecos().size());
-        //Usuario usuariotemp = toUsuario(usuarioDTO);
-       Usuario usuariotemp = usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO);
+        Usuario usuariotemp = usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO);
 
         Usuario usuario =  this.usuarioRepository.save(usuariotemp);
-        System.out.println("2 " + usuariotemp.getEnderecos().size());
 
        return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuario);
     }
@@ -53,13 +49,11 @@ public class UsuarioService {
         List<Usuario> usuariosBanco = usuarioRepository.findAllUsuarios();
         List<UsuarioDTO> usuarioDTOList = new ArrayList<>();
 
-        System.out.println("inicio " + usuariosBanco.size());
-
         for(int i = 0; i < usuariosBanco.size(); i++){
             usuarioDTOList.add(usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuariosBanco.get(i)));
         }
 
-        System.out.println("fim " + usuarioDTOList.size());
+
 
         return usuarioDTOList;
     }

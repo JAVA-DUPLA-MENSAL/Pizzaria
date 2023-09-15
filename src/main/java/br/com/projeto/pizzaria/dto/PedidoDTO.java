@@ -1,4 +1,4 @@
-package br.com.projeto.pizzaria.DTO;
+package br.com.projeto.pizzaria.dto;
 
 import br.com.projeto.pizzaria.entity.Usuario;
 import lombok.Getter;

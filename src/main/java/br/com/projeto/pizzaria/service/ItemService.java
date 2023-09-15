@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.ItemDTO;
+import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.entity.Item;
 import br.com.projeto.pizzaria.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;

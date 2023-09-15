@@ -1,14 +1,11 @@
 package br.com.projeto.pizzaria.controller;
 
-import br.com.projeto.pizzaria.DTO.EnderecoDTO;
+import br.com.projeto.pizzaria.dto.EnderecoDTO;
 import br.com.projeto.pizzaria.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
