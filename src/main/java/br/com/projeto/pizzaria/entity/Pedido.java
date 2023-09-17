@@ -23,6 +23,14 @@ public class Pedido {
     @JoinColumn(name = "usuario_fk")
     private Usuario usuario;
 
+    public Pedido(){
 
+    }
 
+    public Pedido(Long id, String nome, String observacao, Usuario usuario) {
+        this.id = id;
+        this.nome = nome;
+        this.observacao = observacao;
+        this.usuario = usuario;
+    }
 }

@@ -16,8 +16,13 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private PedidoService pedidoService;
+
     public ItemDTO criar(ItemDTO itemDTO){
-        Item item = this.itemRepository.save(toItem(itemDTO));
+        Item item = toItem(itemDTO);
+
+        itemRepository.save(item);
 
         return toItemDTO(item);
     }
@@ -63,7 +68,7 @@ public class ItemService {
 
         itemDTO.setEntrega(item.getEntrega());
         itemDTO.setTamanho(item.getTamanho());
-        itemDTO.setPedido(item.getPedido());
+        itemDTO.setPedidoDTO(pedidoService.toPedidoDTO(item.getPedido()));
 
         return itemDTO;
     }
@@ -73,7 +78,7 @@ public class ItemService {
 
         item.setEntrega(itemDTO.getEntrega());
         item.setTamanho(itemDTO.getTamanho());
-        item.setPedido(itemDTO.getPedido());
+        item.setPedido(pedidoService.toPedido(itemDTO.getPedidoDTO()));
 
         return item;
     }

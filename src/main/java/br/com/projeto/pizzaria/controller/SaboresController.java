@@ -45,7 +45,7 @@ public class SaboresController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editar(@RequestParam("id")Long id, @RequestBody SaboresDTO saboresDTO){
+    public ResponseEntity<SaboresDTO> editar(@RequestParam("id")Long id, @RequestBody SaboresDTO saboresDTO){
         try{
             return ResponseEntity.ok(saboresService.editar(id,saboresDTO));
         }catch (Exception e){

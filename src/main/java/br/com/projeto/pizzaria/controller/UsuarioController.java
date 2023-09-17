@@ -45,7 +45,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editar(@RequestParam("id")Long id,@RequestBody UsuarioDTO  usuarioDTO){
+    public ResponseEntity<UsuarioDTO> editar(@RequestParam("id")Long id,@RequestBody UsuarioDTO  usuarioDTO){
         try{
            return ResponseEntity.ok(usuarioService.editar(id,usuarioDTO));
         }catch (Exception e){

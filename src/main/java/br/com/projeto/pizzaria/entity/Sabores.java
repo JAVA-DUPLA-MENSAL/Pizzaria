@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,5 +19,14 @@ public class Sabores {
     private String nome;
 
     @ManyToMany(mappedBy = "sabores")
-    private List<Item> item = new ArrayList<>();
+    private List<Item> item;
+
+    public Sabores(){
+
+    }
+
+    public Sabores(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 }

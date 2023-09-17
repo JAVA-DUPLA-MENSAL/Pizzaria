@@ -1,26 +1,33 @@
 package br.com.projeto.pizzaria.dto;
 
-import br.com.projeto.pizzaria.entity.Pedido;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 public class ItemDTO {
 
+    private Long id;
+
+    private PedidoDTO pedidoDTO;
+
     private String tamanho;
 
     private Boolean entrega;
 
-    private Pedido pedido;
+    private List<SaboresDTO> saboresDTO;
 
     public ItemDTO(){
 
     }
 
-    public ItemDTO(String tamanho, Boolean entrega, Pedido pedido) {
+    public ItemDTO(Long id, PedidoDTO pedidoDTO, String tamanho, Boolean entrega, List<SaboresDTO> saboresDTO) {
+        this.id = id;
+        this.pedidoDTO = pedidoDTO;
         this.tamanho = tamanho;
         this.entrega = entrega;
-        this.pedido = pedido;
+        this.saboresDTO = saboresDTO;
     }
 }

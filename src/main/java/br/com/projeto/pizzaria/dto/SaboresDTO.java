@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.dto;
 
-import br.com.projeto.pizzaria.entity.Item;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,15 +14,14 @@ public class SaboresDTO {
 
     private String nome;
 
-    private List<Item> item;
+    private List<ItemDTO> itemDTOS;
 
     public SaboresDTO(){
 
     }
 
-    public SaboresDTO(Long id, String nome, List<Item> item) {
+    public SaboresDTO(Long id, String nome) {
         this.id = id;
         this.nome = nome;
-        this.item = item;
     }
 }

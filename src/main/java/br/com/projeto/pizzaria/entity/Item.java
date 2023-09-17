@@ -23,10 +23,22 @@ public class Item {
 
     private Boolean entrega;
 
-
     @ManyToMany
     @JoinTable(name = "item_sabores",
       joinColumns = @JoinColumn(name = "item_fk"),
       inverseJoinColumns = @JoinColumn(name = "sabores_fk"))
     private List<Sabores> sabores = new ArrayList<>();
+
+    public Item(){
+
+    }
+
+    public Item(Long id, Pedido pedido, String tamanho, Boolean entrega, List<Sabores> sabores) {
+        this.id = id;
+        this.pedido = pedido;
+        this.tamanho = tamanho;
+        this.entrega = entrega;
+        this.sabores = sabores;
+    }
+
 }

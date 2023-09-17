@@ -1,5 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
+import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.dto.PedidoDTO;
 import br.com.projeto.pizzaria.entity.Pedido;
 import br.com.projeto.pizzaria.repository.PedidoRepository;
@@ -16,9 +17,15 @@ public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private UsuarioDTOConvert usuarioDTOConvert;
+
 
     public PedidoDTO criar(PedidoDTO pedidoDTO){
-       Pedido pedido = this.pedidoRepository.save(toPedido(pedidoDTO));
+
+       Pedido pedido = toPedido(pedidoDTO);
+
+       pedidoRepository.save(pedido);
 
        return toPedidoDTO(pedido);
     }
@@ -40,14 +47,14 @@ public class PedidoService {
         return pedidoDTOList;
     }
 
-    public String editar(Long id, PedidoDTO pedidoDTO){
+    public PedidoDTO editar(Long id, PedidoDTO pedidoDTO){
         Pedido pedido = this.pedidoRepository.findById(id).orElse(null);
 
         Assert.isTrue(pedido != null, "Pedido nao encontrado");
 
         this.pedidoRepository.save(toPedido(pedidoDTO));
 
-        return pedidoDTO.getNome() + " editado";
+        return pedidoDTO;
     }
 
     public String deletar(Long id){
@@ -65,7 +72,7 @@ public class PedidoService {
 
         pedidoDTO.setNome(pedido.getNome());
         pedidoDTO.setObservacao(pedido.getObservacao());
-        pedidoDTO.setUsuario(pedido.getUsuario());
+        pedidoDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
 
         return pedidoDTO;
     }
@@ -75,7 +82,7 @@ public class PedidoService {
 
         pedido.setNome(pedidoDTO.getNome());
         pedido.setObservacao(pedidoDTO.getObservacao());
-        pedido.setUsuario(pedidoDTO.getUsuario());
+        pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuarioDTO()));
 
         return pedido;
     }

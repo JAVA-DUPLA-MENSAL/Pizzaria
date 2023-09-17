@@ -28,9 +28,9 @@ public class UsuarioService {
 
         Usuario usuariotemp = usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO);
 
-        Usuario usuario =  this.usuarioRepository.save(usuariotemp);
+        this.usuarioRepository.save(usuariotemp);
 
-       return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuario);
+       return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuariotemp);
     }
 
     public List<UsuarioDTO> findByNome(String nome){
@@ -58,13 +58,12 @@ public class UsuarioService {
         return usuarioDTOList;
     }
 
-    public String editar(Long id,UsuarioDTO usuarioDTO){
+    public UsuarioDTO editar(Long id,UsuarioDTO usuarioDTO){
         Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
 
         Assert.isTrue(usuarioBanco != null, "Usuario nao encontrado");
-        usuarioRepository.save(usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO));
 
-        return usuarioDTO.getNome() + " editado com sucesso";
+        return usuarioDTO;
     }
 
     public String deletar(Long id){
