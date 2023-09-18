@@ -19,8 +19,12 @@ public class EnderecoService {
     private EnderecoRepository enderecoRepository;
 
 
-    public void criar(EnderecoDTO enderecoDTO){
-        this.enderecoRepository.save(toEndereco(enderecoDTO));
+    public EnderecoDTO criar(EnderecoDTO enderecoDTO){
+        Endereco endereco = toEndereco(enderecoDTO);
+
+        this.enderecoRepository.save(endereco);
+
+        return toEnderecoDTO(endereco);
     }
 
     public List<EnderecoDTO> findAllEnderecos(){
@@ -55,7 +59,7 @@ public class EnderecoService {
         enderecoDTO1.setId(endereco.getId());
         enderecoDTO1.setRua(endereco.getRua());
         enderecoDTO1.setNumCasa(endereco.getNumCasa());
-        enderecoDTO1.setUsuario(toUsuarioDTO(endereco.getUsuario()));
+        enderecoDTO1.setUsuarioDTO(toUsuarioDTO(endereco.getUsuario()));
 
         return enderecoDTO1;
     }
@@ -65,7 +69,7 @@ public class EnderecoService {
         endereco.setId(enderecoDTO.getId());
         endereco.setRua(enderecoDTO.getRua());
         endereco.setNumCasa(enderecoDTO.getNumCasa());
-        endereco.setUsuario(toUsuario(enderecoDTO.getUsuario()));
+        endereco.setUsuario(toUsuario(enderecoDTO.getUsuarioDTO()));
         return endereco;
     }
 

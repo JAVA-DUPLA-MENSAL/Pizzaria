@@ -19,10 +19,9 @@ public class EnderecoController {
 
 
     @PostMapping("/criar")
-    public ResponseEntity<String> criar(@RequestBody final EnderecoDTO enderecoDTO){
+    public ResponseEntity<EnderecoDTO> criar(@RequestBody final EnderecoDTO enderecoDTO){
         try{
-            enderecoService.criar(enderecoDTO);
-            return  ResponseEntity.ok("Endereço, cadastrado");
+            return  ResponseEntity.ok( enderecoService.criar(enderecoDTO));
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -41,7 +40,7 @@ public class EnderecoController {
     public ResponseEntity<String> editar(@RequestParam("id") Long id,@RequestBody EnderecoDTO enderecoDTO){
         try{
             enderecoService.editar(id,enderecoDTO);
-            return ResponseEntity.ok(enderecoDTO.getUsuario() + " Foi alterado");
+            return ResponseEntity.ok(enderecoDTO.getUsuarioDTO() + " Foi alterado");
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

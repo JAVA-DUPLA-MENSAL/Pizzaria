@@ -15,7 +15,7 @@ public class EnderecoDTO {
     private int numCasa;
 
     @JsonIgnoreProperties("enderecos")
-    private UsuarioDTO usuario;
+    private UsuarioDTO usuarioDTO;
 
     public EnderecoDTO(){
 
@@ -25,7 +25,7 @@ public class EnderecoDTO {
         this.id=id;
         this.rua=rua;
         this.numCasa=numCasa;
-        this.usuario=usuarioDTO;
+        this.usuarioDTO=usuarioDTO;
     }
 
 }

@@ -22,7 +22,9 @@ public class LoginService {
 
     public LoginDTO criar(LoginDTO loginDTO){
 
-        Login login = loginRepository.save(toLogin(loginDTO));
+        Login login = toLogin(loginDTO);
+
+        loginRepository.save(login);
 
         return toLoginDTO(login);
     }
@@ -52,11 +54,10 @@ public class LoginService {
         Login loginBanco = this.loginRepository.findById(id).orElse(null);
 
         Assert.isTrue(loginBanco != null, "Login nao encontrado");
-        //fazer verificacoes
 
-       Login login = loginRepository.save(toLogin(loginDTO));
+        loginRepository.save(toLogin(loginDTO));
 
-        return toLoginDTO(login);
+        return toLoginDTO(loginBanco);
     }
 
     public String deletar(Long id){

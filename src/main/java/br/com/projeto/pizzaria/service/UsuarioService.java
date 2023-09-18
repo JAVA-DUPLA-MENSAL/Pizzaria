@@ -53,8 +53,6 @@ public class UsuarioService {
             usuarioDTOList.add(usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuariosBanco.get(i)));
         }
 
-
-
         return usuarioDTOList;
     }
 

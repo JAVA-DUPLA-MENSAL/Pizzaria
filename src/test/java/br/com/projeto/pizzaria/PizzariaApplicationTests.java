@@ -35,6 +35,9 @@ class PizzariaApplicationTests {
 	@MockBean
 	SaboresRepository saboresRepository;
 
+	@MockBean
+	EnderecoRepository enderecoRepository;
+
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -47,9 +50,14 @@ class PizzariaApplicationTests {
 	@Autowired
 	private SaboresService saboresService;
 
+	@Autowired
+	private EnderecoService enderecoService;
+
 	@BeforeEach
 	void injectData(){
 		Usuario usuario = new Usuario(1L,"Andre","123123123","800.123.123-22");
+
+		Endereco endereco = new Endereco(1L, "Av.Brasil",123,usuario);
 
 		Pedido pedido = new Pedido(1L,"Pizza","Nenhuma observacao",usuario);
 
@@ -71,6 +79,9 @@ class PizzariaApplicationTests {
 
 		Mockito.when(saboresRepository.save(sabores)).thenReturn(sabores);
 		Mockito.when(saboresRepository.findById(1L)).thenReturn(Optional.of(sabores));
+
+		Mockito.when(enderecoRepository.save(endereco)).thenReturn(endereco);
+		Mockito.when(enderecoRepository.findById(1L)).thenReturn(Optional.of(endereco));
 
 
 	}
@@ -96,7 +107,6 @@ class PizzariaApplicationTests {
 
 		Assert.assertEquals("usuario deletado",data);
 	}
-
 
 	//--------------------------PEDIDO------------------------------------//
 
@@ -195,4 +205,20 @@ class PizzariaApplicationTests {
 
 		Assert.assertEquals("Sabor deletado",data);
 	}
+
+	//------------------Endereco---------------------//
+
+	@Test
+	void criarEndereco(){
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
+
+		EnderecoDTO endereco = new EnderecoDTO(1L, "Av.Brasil",123,usuarioDTO);
+
+		var data = enderecoService.criar(endereco);
+
+		Assert.assertEquals("Av.Brasil",data.getRua());
+	}
+
+
+
 }
