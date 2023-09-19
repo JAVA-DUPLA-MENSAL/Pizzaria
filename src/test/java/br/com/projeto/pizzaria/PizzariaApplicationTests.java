@@ -64,6 +64,10 @@ class PizzariaApplicationTests {
 	@BeforeEach
 	void injectData(){
 		Usuario usuario = new Usuario(1L,"Andre","123123123","800.123.123-22");
+		Usuario usuario1 = new Usuario(1L,"Carlos","123","800");
+		List<Usuario> usuarioList= new ArrayList<>();
+		usuarioList.add(usuario);
+		usuarioList.add(usuario1);
 
 		Endereco endereco = new Endereco(1L, "Av.Brasil",123,usuario);
 
@@ -80,6 +84,8 @@ class PizzariaApplicationTests {
 
 		Mockito.when(usuarioRepository.save(usuario)).thenReturn(usuario);
 		Mockito.when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+		Mockito.when(usuarioRepository.findPessoaByNome("Andre")).thenReturn(usuarioList);
+		Mockito.when(usuarioRepository.findAllUsuarios()).thenReturn(usuarioList);
 
 		Mockito.when(pedidoRepository.save(pedido)).thenReturn(pedido);
 		Mockito.when(pedidoRepository.findById(1L)).thenReturn(Optional.of(pedido));
@@ -105,6 +111,20 @@ class PizzariaApplicationTests {
 
 		Assert.assertEquals("Andre", data.getBody().getNome());
 
+	}
+
+	@Test
+	void buscarUsuarioByNome(){
+		var data = usuarioController.buscarNome("Andre");
+
+		Assert.assertEquals("Andre", data.getBody().get(0).getNome());
+	}
+
+	@Test
+	void buscarTodosUsuarios(){
+		var data = usuarioController.buscarUsuarios();
+
+		Assert.assertEquals("Carlos", data.getBody().get(1).getNome());
 	}
 
 	@Test
@@ -238,7 +258,7 @@ class PizzariaApplicationTests {
 	@Test
 	void editarEndereco(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
-		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil", 123);
+		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil", 123,usuarioDTO);
 		enderecoDTO.setUsuarioDTO(usuarioDTO);
 
 		var endereco = enderecoController.editar(1L,enderecoDTO);
