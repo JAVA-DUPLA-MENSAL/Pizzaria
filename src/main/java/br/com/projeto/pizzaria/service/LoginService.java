@@ -57,7 +57,7 @@ public class LoginService {
 
         loginRepository.save(toLogin(loginDTO));
 
-        return toLoginDTO(loginBanco);
+        return loginDTO;
     }
 
     public String deletar(Long id){
@@ -71,7 +71,7 @@ public class LoginService {
     }
 
     public Login toLogin(LoginDTO loginDTO){
-        Login login = new Login(1L, "exemplo@exemplo.com", "senha");
+        Login login = new Login();
 
         login.setId(loginDTO.getId());
         login.setEmail(loginDTO.getEmail());
@@ -82,7 +82,7 @@ public class LoginService {
     }
 
     public LoginDTO toLoginDTO(Login login){
-        LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha");
+        LoginDTO loginDTO = new LoginDTO();
 
         loginDTO.setId(login.getId());
         loginDTO.setEmail(login.getEmail());

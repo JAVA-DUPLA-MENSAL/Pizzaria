@@ -15,7 +15,7 @@ public class LoginDTO {
 
     private UsuarioDTO usuarioDTO;
 
-    public LoginDTO(long l, String mail, String senha){
+    public LoginDTO(){
 
     }
 
