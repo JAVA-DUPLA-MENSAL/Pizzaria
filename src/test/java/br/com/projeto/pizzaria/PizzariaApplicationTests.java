@@ -1,7 +1,6 @@
 package br.com.projeto.pizzaria;
 
-import br.com.projeto.pizzaria.controller.LoginController;
-import br.com.projeto.pizzaria.controller.UsuarioController;
+import br.com.projeto.pizzaria.controller.*;
 import br.com.projeto.pizzaria.dto.*;
 import br.com.projeto.pizzaria.entity.*;
 import br.com.projeto.pizzaria.repository.*;
@@ -45,22 +44,22 @@ class PizzariaApplicationTests {
 	LoginRepository loginRepository;
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private UsuarioController usuarioController;
 
 	@Autowired
-	private PedidoService pedidoService;
+	private PedidoController pedidoController;
 
 	@Autowired
-	private ItemService itemService;
+	private ItemController itemController;
 
 	@Autowired
-	private SaboresService saboresService;
+	private SaboresController saboresController;
 
 	@Autowired
-	private EnderecoService enderecoService;
+	private EnderecoController enderecoController;
 
 	@Autowired
-	private LoginService loginService;
+	private LoginController loginController;
 
 	@BeforeEach
 	void injectData(){
@@ -77,7 +76,7 @@ class PizzariaApplicationTests {
 
 		Item item = new Item(1L,pedido,"Grande",true,saboresList);
 
-		Login login = new Login(1L, "exemplo@exemplo.com", "senha");
+		Login login = new Login(1L, "exemplo@exemplo.com", "senha", usuario);
 
 		Mockito.when(usuarioRepository.save(usuario)).thenReturn(usuario);
 		Mockito.when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
@@ -98,26 +97,28 @@ class PizzariaApplicationTests {
 		Mockito.when(loginRepository.findById(1L)).thenReturn(Optional.of(login));
 	}
 
+	//-----------------------USUARIO----------------------------//
+
 	@Test
 	void criarUsuario() {
-		var data = usuarioService.criar(new UsuarioDTO(1L,"Andre","123123123","800.123.123-22"));
+		var data = usuarioController.criar(new UsuarioDTO(1L,"Andre","123123123","800.123.123-22"));
 
-		Assert.assertEquals("Andre", data.getNome());
+		Assert.assertEquals("Andre", data.getBody().getNome());
 
 	}
 
 	@Test
 	void editarUsuario(){
-		var data = usuarioService.editar(1L,new UsuarioDTO(1L,"Carlos","123123123","800.123.123-22"));
+		var data = usuarioController.editar(1L,new UsuarioDTO(1L,"Carlos","123123123","800.123.123-22"));
 
-		Assert.assertEquals("Carlos",data.getNome());
+		Assert.assertEquals("Carlos",data.getBody().getNome());
 	}
 
 	@Test
 	void deletarUsuario(){
-		String data = usuarioService.deletar(1L);
+		var data = usuarioController.deletar(1L);
 
-		Assert.assertEquals("usuario deletado",data);
+		Assert.assertEquals("usuario deletado",data.getBody());
 	}
 
 	//--------------------------PEDIDO------------------------------------//
@@ -127,9 +128,9 @@ class PizzariaApplicationTests {
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Pizza","Nenhuma observacao",usuarioDTO);
 
-		var data = pedidoService.criar(pedidoDTO);
+		var data = pedidoController.criar(pedidoDTO);
 
-		Assert.assertEquals("Pizza", data.getNome());
+		Assert.assertEquals("Pizza", data.getBody().getNome());
 	}
 
 	@Test
@@ -137,16 +138,16 @@ class PizzariaApplicationTests {
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Hamburguer","Nenhuma observacao",usuarioDTO);
 
-		var data = pedidoService.editar(1L, pedidoDTO);
+		var data = pedidoController.editar(1L, pedidoDTO);
 
-		Assert.assertEquals("Hamburguer",data.getNome());
+		Assert.assertEquals("Hamburguer",data.getBody().getNome());
 	}
 
 	@Test
 	void deletarPedido(){
-		var data = pedidoService.deletar(1L);
+		var data = pedidoController.deletar(1L);
 
-		Assert.assertEquals("Pedido deletado", data);
+		Assert.assertEquals("Pedido deletado", data.getBody());
 	}
 
 	//--------------------ITEM-------------------------//
@@ -162,9 +163,9 @@ class PizzariaApplicationTests {
 
 		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTO,"Grande",true,saboresDTOList);
 
-		var data = itemService.criar(itemDTO);
+		var data = itemController.criar(itemDTO);
 
-		Assert.assertEquals("Grande",itemDTO.getTamanho());
+		Assert.assertEquals("Grande",data.getBody().getTamanho());
 	}
 
 	@Test
@@ -178,16 +179,16 @@ class PizzariaApplicationTests {
 
 		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTO,"Pequeno",true,saboresDTOList);
 
-		var data = itemService.editar(1L,itemDTO);
+		var data = itemController.editar(1L,itemDTO);
 
-		Assert.assertEquals("Pequeno",itemDTO.getTamanho());
+		Assert.assertEquals("Pequeno",data.getBody().getTamanho());
 	}
 
 	@Test
 	void deletarItem(){
-		var data = itemService.deletar(1L);
+		var data = itemController.deletar(1L);
 
-		Assert.assertEquals("Item deletado", data);
+		Assert.assertEquals("Item deletado", data.getBody());
 	}
 
 	//-------------------SABORES-------------------//
@@ -196,9 +197,9 @@ class PizzariaApplicationTests {
 	void criarSabores(){
 		SaboresDTO saboresDTO = new SaboresDTO(1L, "Calabresa");
 
-		var data = saboresService.criar(saboresDTO);
+		var data = saboresController.criar(saboresDTO);
 
-		Assert.assertEquals("Calabresa",data.getNome());
+		Assert.assertEquals("Calabresa",data.getBody().getNome());
 
 	}
 
@@ -206,16 +207,16 @@ class PizzariaApplicationTests {
 	void editarSabores(){
 		SaboresDTO saboresDTO = new SaboresDTO(1L, "Portuguesa");
 
-		var data = saboresService.editar(1L,saboresDTO);
+		var data = saboresController.editar(1L,saboresDTO);
 
-		Assert.assertEquals("Portuguesa",data.getNome());
+		Assert.assertEquals("Portuguesa",data.getBody().getNome());
 	}
 
 	@Test
 	void deletarSabores(){
-		var data = saboresService.deletar(1L);
+		var data = saboresController.deletar(1L);
 
-		Assert.assertEquals("Sabor deletado",data);
+		Assert.assertEquals("Sabor deletado",data.getBody());
 	}
 
 	//------------------Endereco---------------------//
@@ -226,66 +227,62 @@ class PizzariaApplicationTests {
 
 		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil",123,usuarioDTO);
 
-		//var data = enderecoService.criar(enderecoDTO);
 
-		EnderecoDTO createdEnderecoDTO = enderecoService.criar(enderecoDTO);
+		var createdEnderecoDTO = enderecoController.criar(enderecoDTO);
 
-		Assert.assertEquals(enderecoDTO.getId(), createdEnderecoDTO.getId());
-		Assert.assertEquals(enderecoDTO.getRua(), createdEnderecoDTO.getRua());
-		Assert.assertEquals(enderecoDTO.getNumCasa(), createdEnderecoDTO.getNumCasa());
+		Assert.assertEquals(enderecoDTO.getId(), createdEnderecoDTO.getBody().getId());
+		Assert.assertEquals(enderecoDTO.getRua(), createdEnderecoDTO.getBody().getRua());
+		Assert.assertEquals(enderecoDTO.getNumCasa(), createdEnderecoDTO.getBody().getNumCasa());
 	}
 
 	@Test
 	void editarEndereco(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
 		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil", 123);
+		enderecoDTO.setUsuarioDTO(usuarioDTO);
 
-		Endereco endereco = enderecoService.toEndereco(enderecoDTO);
+		var endereco = enderecoController.editar(1L,enderecoDTO);
 
-		Mockito.when(enderecoRepository.save(any(Endereco.class))).thenReturn(endereco);
-
-		enderecoService.editar(1L, enderecoDTO);
-
-		Assert.assertEquals(enderecoDTO.getRua(), endereco.getRua());
-		Assert.assertEquals(enderecoDTO.getNumCasa(), endereco.getNumCasa());
+		Assert.assertEquals(enderecoDTO.getRua(), endereco.getBody().getRua());
+		Assert.assertEquals(enderecoDTO.getNumCasa(), endereco.getBody().getNumCasa());
 	}
 
 	@Test
 	void deletarEndereco(){
-		String result = enderecoService.deletar(1L);
+		var result = enderecoController.deletar(1L);
 
-		Assert.assertEquals("Endereço deletado", result);
+		Assert.assertEquals("Endereco deletado com sucesso", result.getBody());
 	}
-
-
 
 	//--------------------Login-------------------//
 
 	@Test
 	void criarLogin(){
-		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
+		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha",usuarioDTO);
 
-		LoginDTO createdLogin = loginService.criar(loginDTO);
+		var createdLogin = loginController.criar(loginDTO);
 
-		Assert.assertEquals(loginDTO.getEmail(), createdLogin.getEmail());
-		Assert.assertEquals(loginDTO.getSenha(), createdLogin.getSenha());
+		Assert.assertEquals(loginDTO.getEmail(), createdLogin.getBody().getEmail());
+		Assert.assertEquals(loginDTO.getSenha(), createdLogin.getBody().getSenha());
 	}
 
 	@Test
 	void editarLogin(){
-		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
+		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "admin",usuarioDTO);
 
-		LoginDTO editedLogin = loginService.editar(1L, loginDTO);
+		var Login = loginController.editar(1L, loginDTO);
 
-		Assert.assertEquals(loginDTO.getEmail(), editedLogin.getEmail());
-		Assert.assertEquals(loginDTO.getSenha(), editedLogin.getSenha());
+		Assert.assertEquals("exemplo@exemplo.com", Login.getBody().getEmail());
+		Assert.assertEquals("admin", Login.getBody().getSenha());
 
 	}
 
 	@Test
 	void deletarLogin(){
-		String result = loginService.deletar(1L);
-		Assert.assertEquals("Login deletado com sucesso", result);
+		var result = loginController.deletar(1L);
+		Assert.assertEquals("Login deletado com sucesso", result.getBody());
 	}
 
 }
