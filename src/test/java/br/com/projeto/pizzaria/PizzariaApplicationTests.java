@@ -9,6 +9,7 @@ import br.com.projeto.pizzaria.service.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 class PizzariaApplicationTests {
@@ -38,6 +41,9 @@ class PizzariaApplicationTests {
 	@MockBean
 	EnderecoRepository enderecoRepository;
 
+	@MockBean
+	LoginRepository loginRepository;
+
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -52,6 +58,9 @@ class PizzariaApplicationTests {
 
 	@Autowired
 	private EnderecoService enderecoService;
+
+	@Autowired
+	private LoginService loginService;
 
 	@BeforeEach
 	void injectData(){
@@ -68,6 +77,8 @@ class PizzariaApplicationTests {
 
 		Item item = new Item(1L,pedido,"Grande",true,saboresList);
 
+		Login login = new Login(1L, "exemplo@exemplo.com", "senha");
+
 		Mockito.when(usuarioRepository.save(usuario)).thenReturn(usuario);
 		Mockito.when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
 
@@ -83,7 +94,8 @@ class PizzariaApplicationTests {
 		Mockito.when(enderecoRepository.save(endereco)).thenReturn(endereco);
 		Mockito.when(enderecoRepository.findById(1L)).thenReturn(Optional.of(endereco));
 
-
+		Mockito.when(loginRepository.save(login)).thenReturn(login);
+		Mockito.when(loginRepository.findById(1L)).thenReturn(Optional.of(login));
 	}
 
 	@Test
@@ -212,13 +224,68 @@ class PizzariaApplicationTests {
 	void criarEndereco(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
 
-		EnderecoDTO endereco = new EnderecoDTO(1L, "Av.Brasil",123,usuarioDTO);
+		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil",123,usuarioDTO);
 
-		var data = enderecoService.criar(endereco);
+		//var data = enderecoService.criar(enderecoDTO);
 
-		Assert.assertEquals("Av.Brasil",data.getRua());
+		EnderecoDTO createdEnderecoDTO = enderecoService.criar(enderecoDTO);
+
+		Assert.assertEquals(enderecoDTO.getId(), createdEnderecoDTO.getId());
+		Assert.assertEquals(enderecoDTO.getRua(), createdEnderecoDTO.getRua());
+		Assert.assertEquals(enderecoDTO.getNumCasa(), createdEnderecoDTO.getNumCasa());
+	}
+
+	@Test
+	void editarEndereco(){
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
+		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil", 123);
+
+		Endereco endereco = enderecoService.toEndereco(enderecoDTO);
+
+		Mockito.when(enderecoRepository.save(any(Endereco.class))).thenReturn(endereco);
+
+		enderecoService.editar(1L, enderecoDTO);
+
+		Assert.assertEquals(enderecoDTO.getRua(), endereco.getRua());
+		Assert.assertEquals(enderecoDTO.getNumCasa(), endereco.getNumCasa());
+	}
+
+	@Test
+	void deletarEndereco(){
+		String result = enderecoService.deletar(1L);
+
+		Assert.assertEquals("Endereço deletado", result);
 	}
 
 
+
+	//--------------------Login-------------------//
+
+	@Test
+	void criarLogin(){
+		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha");
+
+		LoginDTO createdLogin = loginService.criar(loginDTO);
+
+		Assert.assertEquals(loginDTO.getEmail(), createdLogin.getEmail());
+		Assert.assertEquals(loginDTO.getSenha(), createdLogin.getSenha());
+	}
+
+	@Test
+	void editarLogin(){
+		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha");
+
+		LoginDTO editedLogin = loginService.editar(1L, loginDTO);
+
+		Assert.assertEquals(loginDTO.getEmail(), editedLogin.getEmail());
+		Assert.assertEquals(loginDTO.getSenha(), editedLogin.getSenha());
+
+	}
+
+	@Test
+	void deletarLogin(){
+		String result = loginService.deletar(1L);
+		Assert.assertEquals("Login deletado com sucesso", result);
+	}
 
 }

@@ -28,4 +28,6 @@ public class EnderecoDTO {
         this.usuarioDTO=usuarioDTO;
     }
 
+    public EnderecoDTO(long id, String rua, int numCasa) {
+    }
 }

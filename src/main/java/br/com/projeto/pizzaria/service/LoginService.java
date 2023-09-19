@@ -71,7 +71,7 @@ public class LoginService {
     }
 
     public Login toLogin(LoginDTO loginDTO){
-        Login login = new Login();
+        Login login = new Login(1L, "exemplo@exemplo.com", "senha");
 
         login.setId(loginDTO.getId());
         login.setEmail(loginDTO.getEmail());
@@ -82,7 +82,7 @@ public class LoginService {
     }
 
     public LoginDTO toLoginDTO(Login login){
-        LoginDTO loginDTO = new LoginDTO();
+        LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha");
 
         loginDTO.setId(login.getId());
         loginDTO.setEmail(login.getEmail());

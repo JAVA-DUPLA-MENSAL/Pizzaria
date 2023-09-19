@@ -24,7 +24,7 @@ public class Login {
     @JoinColumn(name = "usuario_fk", referencedColumnName = "id")
     private Usuario usuario;
 
-    public Login(){
+    public Login(long l, String mail, String senha){
 
     }
 
