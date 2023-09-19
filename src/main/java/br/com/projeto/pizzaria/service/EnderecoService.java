@@ -38,12 +38,15 @@ public class EnderecoService {
         return enderecoDTOList;
     }
 
-    public void editar(Long id,EnderecoDTO enderecoDTO){
+    public EnderecoDTO editar(Long id,EnderecoDTO enderecoDTO){
 
         Endereco enderecoBanco = this.enderecoRepository.findById(id).orElse(null);
 
         Assert.isTrue(enderecoBanco != null, "Endereco nao encontrado");
+
         this.enderecoRepository.save(toEndereco(enderecoDTO));
+
+        return enderecoDTO;
     }
 
     public String deletar(Long id){

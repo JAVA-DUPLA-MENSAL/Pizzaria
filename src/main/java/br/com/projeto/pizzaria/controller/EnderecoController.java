@@ -37,10 +37,9 @@ public class EnderecoController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editar(@RequestParam("id") Long id,@RequestBody EnderecoDTO enderecoDTO){
+    public ResponseEntity<EnderecoDTO> editar(@RequestParam("id") Long id,@RequestBody EnderecoDTO enderecoDTO){
         try{
-            enderecoService.editar(id,enderecoDTO);
-            return ResponseEntity.ok(enderecoDTO.getUsuarioDTO() + " Foi alterado");
+            return ResponseEntity.ok( enderecoService.editar(id,enderecoDTO));
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -50,7 +49,7 @@ public class EnderecoController {
     public ResponseEntity<String> deletar(@RequestParam("id")Long id){
         try{
             enderecoService.deletar(id);
-            return ResponseEntity.ok("Usuario deletado com sucesso");
+            return ResponseEntity.ok("Endereco deletado com sucesso");
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
