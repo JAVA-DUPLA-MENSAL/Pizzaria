@@ -43,14 +43,14 @@ public class ItemService {
         return itensDTOList;
     }
 
-    public String editar(Long id, ItemDTO itemDTO){
+    public ItemDTO editar(Long id, ItemDTO itemDTO){
         Item item = this.itemRepository.findById(id).orElse(null);
 
         Assert.isTrue(item != null, "Item nao encontrado");
 
         this.itemRepository.save(toItem(itemDTO));
 
-        return itemDTO.getTamanho() + "editado";
+        return itemDTO;
     }
 
     public String deletar(Long id){
