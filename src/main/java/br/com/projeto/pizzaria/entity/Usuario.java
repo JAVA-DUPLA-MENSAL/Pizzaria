@@ -30,7 +30,7 @@ public class Usuario {
     //@Column(name = "endereco_fk")
     //@JsonManagedReference
     @JsonIgnoreProperties("usuario")
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos;
 
     @OneToOne(mappedBy = "usuario")

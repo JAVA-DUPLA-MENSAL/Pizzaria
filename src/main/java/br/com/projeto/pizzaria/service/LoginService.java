@@ -76,7 +76,7 @@ public class LoginService {
         login.setId(loginDTO.getId());
         login.setEmail(loginDTO.getEmail());
         login.setSenha(loginDTO.getSenha());
-        login.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(loginDTO.getUsuarioDTO()));
+       // login.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(loginDTO.getUsuarioDTO()));
 
         return login;
     }
@@ -87,7 +87,7 @@ public class LoginService {
         loginDTO.setId(login.getId());
         loginDTO.setEmail(login.getEmail());
         loginDTO.setSenha(login.getSenha());
-        loginDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(login.getUsuario()));
+      //  loginDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(login.getUsuario()));
 
         return loginDTO;
     }

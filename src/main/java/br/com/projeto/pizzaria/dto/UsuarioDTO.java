@@ -17,6 +17,8 @@ public class UsuarioDTO {
 
     private String cpf;
 
+    private LoginDTO login;
+
     @JsonIgnoreProperties("usuario")
     private List<EnderecoDTO> enderecos;
 

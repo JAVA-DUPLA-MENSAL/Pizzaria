@@ -31,6 +31,10 @@ public class EnderecoService {
         List<Endereco> enderecosBanco = enderecoRepository.findAll();
         List<EnderecoDTO> enderecoDTOList = new ArrayList<>();
 
+        enderecosBanco.forEach(e ->{
+            System.out.println(e.getRua());
+        });
+
         for(int i = 0; i < enderecosBanco.size(); i++){
             enderecoDTOList.add(toEnderecoDTO(enderecosBanco.get(i)));
         }
@@ -63,7 +67,7 @@ public class EnderecoService {
         enderecoDTO1.setId(endereco.getId());
         enderecoDTO1.setRua(endereco.getRua());
         enderecoDTO1.setNumCasa(endereco.getNumCasa());
-        enderecoDTO1.setUsuarioDTO(toUsuarioDTO(endereco.getUsuario()));
+        enderecoDTO1.setUsuario(toUsuarioDTO(endereco.getUsuario()));
 
         return enderecoDTO1;
     }
@@ -73,7 +77,8 @@ public class EnderecoService {
         endereco.setId(enderecoDTO.getId());
         endereco.setRua(enderecoDTO.getRua());
         endereco.setNumCasa(enderecoDTO.getNumCasa());
-        endereco.setUsuario(toUsuario(enderecoDTO.getUsuarioDTO()));
+        if(enderecoDTO.getUsuario() != null)
+            endereco.setUsuario(toUsuario(enderecoDTO.getUsuario()));
         return endereco;
     }
 

@@ -22,6 +22,7 @@ public class UsuarioController {
         try{
             return ResponseEntity.ok( usuarioService.criar(usuarioDTO));
         }catch (Exception e){
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
@@ -35,7 +36,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/buscar/{nome}")
+    @GetMapping("/buscar/")
     public ResponseEntity<List<UsuarioDTO>> buscarNome(@RequestParam("nome")String nome){
         try{
             return ResponseEntity.ok(usuarioService.findByNome(nome));

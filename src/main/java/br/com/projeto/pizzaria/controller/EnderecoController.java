@@ -21,7 +21,7 @@ public class EnderecoController {
     @PostMapping("/criar")
     public ResponseEntity<EnderecoDTO> criar(@RequestBody final EnderecoDTO enderecoDTO){
         try{
-            return  ResponseEntity.ok( enderecoService.criar(enderecoDTO));
+            return  ResponseEntity.ok(enderecoService.criar(enderecoDTO));
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

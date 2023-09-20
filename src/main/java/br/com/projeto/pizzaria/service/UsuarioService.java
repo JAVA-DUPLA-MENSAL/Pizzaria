@@ -4,6 +4,7 @@ import br.com.projeto.pizzaria.dto.UsuarioDTO;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -24,6 +25,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioDTOConvert usuarioDTOConvert;
 
+    @Transactional
     public UsuarioDTO criar(UsuarioDTO usuarioDTO){
 
         Usuario usuariotemp = usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO);
