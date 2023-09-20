@@ -70,17 +70,24 @@ class PizzariaApplicationTests {
 		usuarioList.add(usuario1);
 
 		Endereco endereco = new Endereco(1L, "Av.Brasil",123,usuario);
+		List<Endereco> enderecoList = new ArrayList<>();
+		enderecoList.add(endereco);
 
 		Pedido pedido = new Pedido(1L,"Pizza","Nenhuma observacao",usuario);
+		List<Pedido> pedidoList = new ArrayList<>();
+		pedidoList.add(pedido);
 
 		Sabores sabores = new Sabores(1L, "Calabresa");
-
 		List<Sabores> saboresList = new ArrayList<>();
 		saboresList.add(sabores);
 
 		Item item = new Item(1L,pedido,"Grande",true,saboresList);
+		List<Item> itemList = new ArrayList<>();
+		itemList.add(item);
 
 		Login login = new Login(1L, "exemplo@exemplo.com", "senha", usuario);
+		List<Login> loginList = new ArrayList<>();
+		loginList.add(login);
 
 		Mockito.when(usuarioRepository.save(usuario)).thenReturn(usuario);
 		Mockito.when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
@@ -89,19 +96,23 @@ class PizzariaApplicationTests {
 
 		Mockito.when(pedidoRepository.save(pedido)).thenReturn(pedido);
 		Mockito.when(pedidoRepository.findById(1L)).thenReturn(Optional.of(pedido));
-
+		Mockito.when(pedidoRepository.findAll()).thenReturn(pedidoList);
 
 		Mockito.when(itemRepository.save(item)).thenReturn(item);
 		Mockito.when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
+		Mockito.when(itemRepository.findAll()).thenReturn(itemList);
 
 		Mockito.when(saboresRepository.save(sabores)).thenReturn(sabores);
 		Mockito.when(saboresRepository.findById(1L)).thenReturn(Optional.of(sabores));
+		Mockito.when(saboresRepository.findAll()).thenReturn(saboresList);
 
 		Mockito.when(enderecoRepository.save(endereco)).thenReturn(endereco);
 		Mockito.when(enderecoRepository.findById(1L)).thenReturn(Optional.of(endereco));
+		Mockito.when(enderecoRepository.findAll()).thenReturn(enderecoList);
 
 		Mockito.when(loginRepository.save(login)).thenReturn(login);
 		Mockito.when(loginRepository.findById(1L)).thenReturn(Optional.of(login));
+		Mockito.when(loginRepository.findAll()).thenReturn(loginList);
 	}
 
 	//-----------------------USUARIO----------------------------//
@@ -145,7 +156,7 @@ class PizzariaApplicationTests {
 	//--------------------------PEDIDO------------------------------------//
 
 	@Test
-	void criarProduto(){
+	void criarPedido(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Pizza","Nenhuma observacao",usuarioDTO);
 
@@ -155,21 +166,21 @@ class PizzariaApplicationTests {
 	}
 
 	@Test
-	void buscarProduto(){
+	void buscarPedido(){
 		var data = pedidoController.buscarId(1L);
 
 		Assert.assertEquals(1L, data.getBody().getId().longValue());
 	}
 
 	@Test
-	void buscarTodosProdutos(){
+	void buscarTodosPedidos(){
 		var data = pedidoController.buscarTodos();
 
-		Assert.assertEquals("Pizza", data.getBody().get(1).getNome());
+		Assert.assertEquals("Pizza", data.getBody().get(0).getNome());
 	}
 
 	@Test
-	void editarProduto(){
+	void editarPedido(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Hamburguer","Nenhuma observacao",usuarioDTO);
 
@@ -230,7 +241,7 @@ class PizzariaApplicationTests {
 	void buscarTodosItens(){
 		var data = itemController.buscarTodos();
 
-		Assert.assertEquals("Grande", data.getBody().get(1).getTamanho());
+		Assert.assertEquals("Grande", data.getBody().get(0).getTamanho());
 	}
 
 	@Test
@@ -263,7 +274,7 @@ class PizzariaApplicationTests {
 	void buscarTodosSabores(){
 		var data = saboresController.buscarTodos();
 
-		Assert.assertEquals("Calabresa", data.getBody().get(1).getNome());
+		Assert.assertEquals("Calabresa", data.getBody().get(0).getNome());
 	}
 
 	@Test
@@ -314,7 +325,7 @@ class PizzariaApplicationTests {
 	void buscarTodosEnderecos(){
 		var data = enderecoController.buscarEnderecos();
 
-		Assert.assertEquals("Av.Brasil", data.getBody().get(1).getRua());
+		Assert.assertEquals("Av.Brasil", data.getBody().get(0).getRua());
 	}
 
 	@Test
@@ -353,7 +364,7 @@ class PizzariaApplicationTests {
 	void buscarTodosLogins(){
 		var data = loginController.buscarTodos();
 
-		Assert.assertEquals("exemplo@exemplo.com", data.getBody().get(1).getEmail());
+		Assert.assertEquals("exemplo@exemplo.com", data.getBody().get(0).getEmail());
 	}
 
 	@Test

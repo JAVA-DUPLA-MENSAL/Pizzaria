@@ -66,6 +66,7 @@ public class ItemService {
     public ItemDTO toItemDTO(Item item){
         ItemDTO itemDTO = new ItemDTO();
 
+        itemDTO.setId(item.getId());
         itemDTO.setEntrega(item.getEntrega());
         itemDTO.setTamanho(item.getTamanho());
         itemDTO.setPedidoDTO(pedidoService.toPedidoDTO(item.getPedido()));
@@ -76,6 +77,7 @@ public class ItemService {
     public Item toItem(ItemDTO itemDTO){
         Item item = new Item();
 
+        item.setId(itemDTO.getId());
         item.setEntrega(itemDTO.getEntrega());
         item.setTamanho(itemDTO.getTamanho());
         item.setPedido(pedidoService.toPedido(itemDTO.getPedidoDTO()));
