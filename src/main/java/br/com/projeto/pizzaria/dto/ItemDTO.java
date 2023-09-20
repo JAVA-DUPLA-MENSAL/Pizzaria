@@ -17,7 +17,7 @@ public class ItemDTO {
 
     private Boolean entrega;
 
-    private List<SaboresDTO> saboresDTO;
+    private List<SaboresDTO> sabores;
 
     public ItemDTO(){
 
@@ -28,6 +28,6 @@ public class ItemDTO {
         this.pedidoDTO = pedidoDTO;
         this.tamanho = tamanho;
         this.entrega = entrega;
-        this.saboresDTO = saboresDTO;
+        this.sabores = saboresDTO;
     }
 }

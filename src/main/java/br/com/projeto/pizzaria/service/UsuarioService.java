@@ -58,10 +58,13 @@ public class UsuarioService {
 
     public UsuarioDTO editar(Long id,UsuarioDTO usuarioDTO){
         Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
+        Usuario usuarioNew = usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO);
 
         Assert.isTrue(usuarioBanco != null, "Usuario nao encontrado");
 
-        return usuarioDTO;
+        usuarioRepository.save(usuarioNew);
+
+        return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuarioNew);
     }
 
     public String deletar(Long id){

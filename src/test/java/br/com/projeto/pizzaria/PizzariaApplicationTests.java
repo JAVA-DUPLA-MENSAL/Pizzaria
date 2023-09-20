@@ -259,7 +259,7 @@ class PizzariaApplicationTests {
 	void editarEndereco(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
 		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil", 123,usuarioDTO);
-		enderecoDTO.setUsuarioDTO(usuarioDTO);
+		enderecoDTO.setUsuario(usuarioDTO);
 
 		var endereco = enderecoController.editar(1L,enderecoDTO);
 

@@ -70,9 +70,10 @@ public class PedidoService {
     public PedidoDTO toPedidoDTO(Pedido pedido){
         PedidoDTO pedidoDTO = new PedidoDTO();
 
+        pedidoDTO.setId(pedido.getId());
         pedidoDTO.setNome(pedido.getNome());
         pedidoDTO.setObservacao(pedido.getObservacao());
-        pedidoDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
+        pedidoDTO.setUsuario(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
 
         return pedidoDTO;
     }
@@ -80,9 +81,10 @@ public class PedidoService {
     public Pedido toPedido(PedidoDTO pedidoDTO){
         Pedido pedido = new Pedido();
 
+        pedido.setId(pedidoDTO.getId());
         pedido.setNome(pedidoDTO.getNome());
         pedido.setObservacao(pedidoDTO.getObservacao());
-        pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuarioDTO()));
+        pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuario()));
 
         return pedido;
     }

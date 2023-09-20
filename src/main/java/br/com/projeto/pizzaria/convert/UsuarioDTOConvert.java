@@ -23,7 +23,7 @@ public class UsuarioDTOConvert {
 
         if (usuarioDTO.getEnderecos() != null) {
             for (int i = 0; i < usuarioDTO.getEnderecos().size(); i++) {
-                usuarioDTO.getEnderecos().get(i).setUsuarioDTO(usuarioDTO);
+                usuarioDTO.getEnderecos().get(i).setUsuario(usuarioDTO);
             }
 
         }
