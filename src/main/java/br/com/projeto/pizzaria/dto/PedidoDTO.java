@@ -12,7 +12,7 @@ public class PedidoDTO {
 
     private String observacao;
 
-    private UsuarioDTO usuarioDTO;
+    private UsuarioDTO usuario;
 
     public PedidoDTO(){
 
@@ -22,6 +22,6 @@ public class PedidoDTO {
         this.id = id;
         this.nome = nome;
         this.observacao = observacao;
-        this.usuarioDTO = usuarioDTO;
+        this.usuario = usuarioDTO;
     }
 }
