@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.ItemDTO;
+import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.entity.Item;
 import br.com.projeto.pizzaria.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,13 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private PedidoService pedidoService;
+
     public ItemDTO criar(ItemDTO itemDTO){
-        Item item = this.itemRepository.save(toItem(itemDTO));
+        Item item = toItem(itemDTO);
+
+        itemRepository.save(item);
 
         return toItemDTO(item);
     }
@@ -38,14 +43,14 @@ public class ItemService {
         return itensDTOList;
     }
 
-    public String editar(Long id, ItemDTO itemDTO){
+    public ItemDTO editar(Long id, ItemDTO itemDTO){
         Item item = this.itemRepository.findById(id).orElse(null);
 
         Assert.isTrue(item != null, "Item nao encontrado");
 
         this.itemRepository.save(toItem(itemDTO));
 
-        return itemDTO.getTamanho() + "editado";
+        return itemDTO;
     }
 
     public String deletar(Long id){
@@ -61,9 +66,10 @@ public class ItemService {
     public ItemDTO toItemDTO(Item item){
         ItemDTO itemDTO = new ItemDTO();
 
+        itemDTO.setId(item.getId());
         itemDTO.setEntrega(item.getEntrega());
         itemDTO.setTamanho(item.getTamanho());
-        itemDTO.setPedido(item.getPedido());
+        itemDTO.setPedidoDTO(pedidoService.toPedidoDTO(item.getPedido()));
 
         return itemDTO;
     }
@@ -71,9 +77,10 @@ public class ItemService {
     public Item toItem(ItemDTO itemDTO){
         Item item = new Item();
 
+        item.setId(itemDTO.getId());
         item.setEntrega(itemDTO.getEntrega());
         item.setTamanho(itemDTO.getTamanho());
-        item.setPedido(itemDTO.getPedido());
+        item.setPedido(pedidoService.toPedido(itemDTO.getPedidoDTO()));
 
         return item;
     }

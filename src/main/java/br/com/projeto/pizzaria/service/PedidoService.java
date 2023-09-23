@@ -1,6 +1,7 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.PedidoDTO;
+import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
+import br.com.projeto.pizzaria.dto.PedidoDTO;
 import br.com.projeto.pizzaria.entity.Pedido;
 import br.com.projeto.pizzaria.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,17 @@ public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private UsuarioDTOConvert usuarioDTOConvert;
+
 
     public PedidoDTO criar(PedidoDTO pedidoDTO){
-        //fazer verificacoes
-       Pedido pedido = this.pedidoRepository.save(toPedido(pedidoDTO));
+
+       Pedido pedido = toPedido(pedidoDTO);
+
+       pedidoRepository.save(pedido);
 
        return toPedidoDTO(pedido);
-       //return "Pedido Criado";
     }
 
     public PedidoDTO findById(Long id){
@@ -42,15 +47,14 @@ public class PedidoService {
         return pedidoDTOList;
     }
 
-    public String editar(Long id, PedidoDTO pedidoDTO){
+    public PedidoDTO editar(Long id, PedidoDTO pedidoDTO){
         Pedido pedido = this.pedidoRepository.findById(id).orElse(null);
 
         Assert.isTrue(pedido != null, "Pedido nao encontrado");
-        //fazer verificacoes
 
         this.pedidoRepository.save(toPedido(pedidoDTO));
 
-        return pedidoDTO.getNome() + " editado";
+        return pedidoDTO;
     }
 
     public String deletar(Long id){
@@ -66,9 +70,10 @@ public class PedidoService {
     public PedidoDTO toPedidoDTO(Pedido pedido){
         PedidoDTO pedidoDTO = new PedidoDTO();
 
+        pedidoDTO.setId(pedido.getId());
         pedidoDTO.setNome(pedido.getNome());
         pedidoDTO.setObservacao(pedido.getObservacao());
-        pedidoDTO.setUsuario(pedido.getUsuario());
+        pedidoDTO.setUsuario(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
 
         return pedidoDTO;
     }
@@ -76,9 +81,10 @@ public class PedidoService {
     public Pedido toPedido(PedidoDTO pedidoDTO){
         Pedido pedido = new Pedido();
 
+        pedido.setId(pedidoDTO.getId());
         pedido.setNome(pedidoDTO.getNome());
         pedido.setObservacao(pedidoDTO.getObservacao());
-        pedido.setUsuario(pedidoDTO.getUsuario());
+        pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuario()));
 
         return pedido;
     }

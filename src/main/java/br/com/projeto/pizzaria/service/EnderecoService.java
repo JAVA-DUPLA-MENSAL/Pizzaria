@@ -1,7 +1,9 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.EnderecoDTO;
+import br.com.projeto.pizzaria.dto.EnderecoDTO;
+import br.com.projeto.pizzaria.dto.UsuarioDTO;
 import br.com.projeto.pizzaria.entity.Endereco;
+import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,6 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EnderecoService {
@@ -17,10 +18,13 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public void criar(EnderecoDTO enderecoDTO){
-        //fazer validacoes antes de salvar
 
-        this.enderecoRepository.save(toEndereco(enderecoDTO));
+    public EnderecoDTO criar(EnderecoDTO enderecoDTO){
+        Endereco endereco = toEndereco(enderecoDTO);
+
+        this.enderecoRepository.save(endereco);
+
+        return toEnderecoDTO(endereco);
     }
 
     public List<EnderecoDTO> findAllEnderecos(){
@@ -34,36 +38,86 @@ public class EnderecoService {
         return enderecoDTOList;
     }
 
-    public void editar(Long id,EnderecoDTO enderecoDTO){
-        //fazer validacoes entes d esalvar
+    public EnderecoDTO editar(Long id,EnderecoDTO enderecoDTO){
+
         Endereco enderecoBanco = this.enderecoRepository.findById(id).orElse(null);
 
         Assert.isTrue(enderecoBanco != null, "Endereco nao encontrado");
+
         this.enderecoRepository.save(toEndereco(enderecoDTO));
+
+        return enderecoDTO;
     }
 
-    public void deletar(Long id){
+    public String deletar(Long id){
         Endereco enderecoBanco = this.enderecoRepository.findById(id).orElse(null);
 
         Assert.isTrue(enderecoBanco != null, "Endereco nao encontrado");
         this.enderecoRepository.delete(enderecoBanco);
+        return null;
     }
 
     public EnderecoDTO toEnderecoDTO(Endereco endereco){
         EnderecoDTO enderecoDTO1 = new EnderecoDTO();
 
+        enderecoDTO1.setId(endereco.getId());
         enderecoDTO1.setRua(endereco.getRua());
         enderecoDTO1.setNumCasa(endereco.getNumCasa());
+        enderecoDTO1.setUsuario(toUsuarioDTO(endereco.getUsuario()));
 
         return enderecoDTO1;
     }
 
     public Endereco toEndereco(EnderecoDTO enderecoDTO){
         Endereco endereco = new Endereco();
-
+        endereco.setId(enderecoDTO.getId());
         endereco.setRua(enderecoDTO.getRua());
         endereco.setNumCasa(enderecoDTO.getNumCasa());
-
+        endereco.setUsuario(toUsuario(enderecoDTO.getUsuario()));
         return endereco;
+    }
+
+
+    public Usuario toUsuario(UsuarioDTO usuarioDTO){
+
+        Usuario usuario = new Usuario();
+
+        usuario.setId(usuarioDTO.getId());
+        usuario.setCpf(usuarioDTO.getCpf());
+        usuario.setNome(usuarioDTO.getNome());
+        usuario.setTelefone(usuarioDTO.getTelefone());
+
+        List<Endereco> dump = new ArrayList<>();
+
+        if(usuarioDTO.getEnderecos() != null){
+            for(int i = 0; i < usuarioDTO.getEnderecos().size(); i++){
+                Endereco aux = toEndereco(usuarioDTO.getEnderecos().get(i));
+                aux.setUsuario(usuario);
+                dump.add(aux);
+            }
+        }
+        usuario.setEnderecos(dump);
+        return usuario;
+    }
+
+    public UsuarioDTO toUsuarioDTO(Usuario usuario){
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+        usuarioDTO.setId(usuario.getId());
+        usuarioDTO.setCpf(usuario.getCpf());
+        usuarioDTO.setNome(usuario.getNome());
+        usuarioDTO.setTelefone(usuario.getTelefone());
+
+
+        List<EnderecoDTO> dump = new ArrayList<>();
+
+        if(usuario.getEnderecos() != null){
+            for(int i =0; i < usuario.getEnderecos().size(); i++){
+                dump.add(toEnderecoDTO(usuario.getEnderecos().get(i)));
+            }
+        }
+        usuarioDTO.setEnderecos(dump);
+        return usuarioDTO;
     }
 }

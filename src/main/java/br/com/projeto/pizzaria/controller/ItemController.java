@@ -1,7 +1,6 @@
 package br.com.projeto.pizzaria.controller;
 
-import br.com.projeto.pizzaria.DTO.ItemDTO;
-import br.com.projeto.pizzaria.DTO.SaboresDTO;
+import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +45,7 @@ public class ItemController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editar(@RequestParam("id")Long id, @RequestBody ItemDTO itemDTO){
+    public ResponseEntity<ItemDTO> editar(@RequestParam("id")Long id, @RequestBody ItemDTO itemDTO){
         try{
             return ResponseEntity.ok(itemService.editar(id,itemDTO));
         }catch (Exception e){
