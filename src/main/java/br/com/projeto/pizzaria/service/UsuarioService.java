@@ -1,6 +1,7 @@
 package br.com.projeto.pizzaria.service;
 
-import br.com.projeto.pizzaria.DTO.UsuarioDTO;
+import br.com.projeto.pizzaria.dto.UsuarioDTO;
+import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.entity.Usuario;
 import br.com.projeto.pizzaria.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,26 @@ import org.springframework.util.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public void criar(UsuarioDTO usuarioDTO){
-        this.usuarioRepository.save(toUsuario(usuarioDTO));
+    @Autowired
+    private  EnderecoService enderecoService;
 
+    @Autowired
+    private UsuarioDTOConvert usuarioDTOConvert;
+
+    public UsuarioDTO criar(UsuarioDTO usuarioDTO){
+
+        Usuario usuariotemp = usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO);
+
+        this.usuarioRepository.save(usuariotemp);
+
+       return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuariotemp);
     }
 
     public List<UsuarioDTO> findByNome(String nome){
@@ -26,7 +38,7 @@ public class UsuarioService {
         List<UsuarioDTO> usuarioDTOList = new ArrayList<>();
 
         for(int i = 0; i < usuarioBanco.size(); i++){
-            usuarioDTOList.add(toUsuarioDTO(usuarioBanco.get(i)));
+            usuarioDTOList.add(usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuarioBanco.get(i)));
         }
 
         return usuarioDTOList;
@@ -34,54 +46,34 @@ public class UsuarioService {
 
 
     public List<UsuarioDTO> findAllUsuarios(){
-        List<Usuario> usuariosBanco = usuarioRepository.findAll();
+        List<Usuario> usuariosBanco = usuarioRepository.findAllUsuarios();
         List<UsuarioDTO> usuarioDTOList = new ArrayList<>();
 
         for(int i = 0; i < usuariosBanco.size(); i++){
-            usuarioDTOList.add(toUsuarioDTO(usuariosBanco.get(i)));
+            usuarioDTOList.add(usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuariosBanco.get(i)));
         }
 
         return usuarioDTOList;
     }
 
-    public String editar(Long id,UsuarioDTO usuarioDTO){
+    public UsuarioDTO editar(Long id,UsuarioDTO usuarioDTO){
         Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
+        Usuario usuarioNew = usuarioDTOConvert.convertUsuarioDTOToUsuario(usuarioDTO);
 
         Assert.isTrue(usuarioBanco != null, "Usuario nao encontrado");
-        usuarioRepository.save(toUsuario(usuarioDTO));
 
-        return usuarioDTO.getNome() + " editado com sucesso";
+        usuarioRepository.save(usuarioNew);
+
+        return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuarioNew);
     }
 
-    public String deletar(Long id){
+    public UsuarioDTO deletar(Long id){
         Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
 
         Assert.isTrue(usuarioBanco != null, "Usuario nao encontrado");
         usuarioRepository.delete(usuarioBanco);
 
-        return "usuario deletado";
+        return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuarioBanco);
     }
 
-    public Usuario toUsuario(UsuarioDTO usuarioDTO){
-
-        Usuario usuario = new Usuario();
-
-        usuario.setCPF(usuarioDTO.getCPF());
-        usuario.setNome(usuarioDTO.getNome());
-        usuario.setTelefone(usuarioDTO.getTelefone());
-        usuario.setEnderecos(usuarioDTO.getEnderecos());
-        return usuario;
-    }
-
-    public UsuarioDTO toUsuarioDTO(Usuario usuario){
-
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-
-        usuarioDTO.setCPF(usuario.getCPF());
-        usuarioDTO.setNome(usuario.getNome());
-        usuarioDTO.setTelefone(usuario.getTelefone());
-        usuarioDTO.setEnderecos(usuario.getEnderecos());
-
-        return usuarioDTO;
-    }
 }

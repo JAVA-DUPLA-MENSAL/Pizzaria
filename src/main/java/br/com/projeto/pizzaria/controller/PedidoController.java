@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.controller;
 
-import br.com.projeto.pizzaria.DTO.PedidoDTO;
+import br.com.projeto.pizzaria.dto.PedidoDTO;
 import br.com.projeto.pizzaria.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,22 +11,25 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pedido")
+@RequestMapping("/api/pedido")
+@CrossOrigin(origins = "*")
 public class PedidoController {
 
     @Autowired
     private PedidoService pedidoService;
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<PedidoDTO> criar(@RequestBody PedidoDTO pedidoDTO){
         try{
             return ResponseEntity.ok(pedidoService.criar(pedidoDTO));
         }catch (Exception e){
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
         }
     }
 
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<List<PedidoDTO>> buscarTodos(){
         try{
             return ResponseEntity.ok(pedidoService.findAllPedido());
@@ -46,7 +49,7 @@ public class PedidoController {
 
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editar(@RequestParam("id")Long id, @RequestBody PedidoDTO pedidoDTO){
+    public ResponseEntity<PedidoDTO> editar(@PathVariable("id")Long id, @RequestBody PedidoDTO pedidoDTO){
         try{
             return ResponseEntity.ok(pedidoService.editar(id,pedidoDTO));
         }catch (Exception e){
@@ -55,9 +58,10 @@ public class PedidoController {
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<String> deletar(@RequestParam("id") Long id){
+    public ResponseEntity<HttpStatus> deletar(@PathVariable("id") Long id){
         try{
-            return ResponseEntity.ok(pedidoService.deletar(id));
+            pedidoService.deletar(id);
+            return ResponseEntity.ok(HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

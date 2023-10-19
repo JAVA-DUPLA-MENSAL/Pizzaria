@@ -1,7 +1,6 @@
 package br.com.projeto.pizzaria.controller;
 
-import br.com.projeto.pizzaria.DTO.UsuarioDTO;
-import br.com.projeto.pizzaria.entity.Usuario;
+import br.com.projeto.pizzaria.dto.UsuarioDTO;
 import br.com.projeto.pizzaria.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,23 +11,23 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/api/usuario")
+@CrossOrigin(origins = "*")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<String> criar(@RequestBody UsuarioDTO usuarioDTO){
+    @PostMapping
+    public ResponseEntity<UsuarioDTO> criar(@RequestBody UsuarioDTO usuarioDTO){
         try{
-            usuarioService.criar(usuarioDTO);
-            return ResponseEntity.ok("Usuario cadastrado");
+            return ResponseEntity.ok( usuarioService.criar(usuarioDTO));
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<List<UsuarioDTO>> buscarUsuarios(){
         try{
             return ResponseEntity.ok(usuarioService.findAllUsuarios());
@@ -37,7 +36,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/buscar/{nome}")
+    @GetMapping("/buscar")
     public ResponseEntity<List<UsuarioDTO>> buscarNome(@RequestParam("nome")String nome){
         try{
             return ResponseEntity.ok(usuarioService.findByNome(nome));
@@ -47,7 +46,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editar(@RequestParam("id")Long id,@RequestBody UsuarioDTO  usuarioDTO){
+    public ResponseEntity<UsuarioDTO> editar(@PathVariable("id")Long id,@RequestBody UsuarioDTO  usuarioDTO){
         try{
            return ResponseEntity.ok(usuarioService.editar(id,usuarioDTO));
         }catch (Exception e){
@@ -56,7 +55,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<String> deletar(@RequestParam("id")Long id){
+    public ResponseEntity<UsuarioDTO> deletar(@PathVariable("id")Long id){
         try{
            return ResponseEntity.ok(usuarioService.deletar(id));
         }catch (Exception e){

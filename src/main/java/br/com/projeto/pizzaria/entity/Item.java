@@ -15,15 +15,30 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Pedido pedido;
+    private String nome;
 
     private String tamanho;
 
-    private Boolean entrega;
+    @ManyToMany(mappedBy = "item")
+    private List<Pedido> pedido;
+
+    private boolean possuiSabores;
+
     @ManyToMany
     @JoinTable(name = "item_sabores",
-      joinColumns = @JoinColumn(name = "sabores_fk"),
-      inverseJoinColumns = @JoinColumn(name = "item_fk"))
-    private List<Sabores> sabores = new ArrayList<>();
+      joinColumns = @JoinColumn(name = "item_fk"),
+      inverseJoinColumns = @JoinColumn(name = "sabores_fk"))
+    private List<Sabores> sabores;
+
+    public Item(){
+
+    }
+
+    public Item(Long id, List<Pedido> pedido, String tamanho, Boolean entrega, List<Sabores> sabores) {
+        this.id = id;
+        //this.pedido = pedido;
+        this.tamanho = tamanho;
+        this.sabores = sabores;
+    }
+
 }

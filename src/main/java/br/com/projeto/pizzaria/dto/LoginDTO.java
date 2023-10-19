@@ -1,6 +1,5 @@
-package br.com.projeto.pizzaria.DTO;
+package br.com.projeto.pizzaria.dto;
 
-import br.com.projeto.pizzaria.entity.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,19 +7,22 @@ import lombok.Setter;
 @Setter
 public class LoginDTO {
 
+    private Long id;
+
     private String email;
 
     private String senha;
 
-    private Usuario usuario;
+    private UsuarioDTO usuarioDTO;
 
     public LoginDTO(){
 
     }
 
-    public LoginDTO(String email, String senha, Usuario usuario) {
+    public LoginDTO(Long id, String email, String senha, UsuarioDTO usuarioDTO) {
+        this.id = id;
         this.email = email;
         this.senha = senha;
-        this.usuario = usuario;
+        this.usuarioDTO = usuarioDTO;
     }
 }
