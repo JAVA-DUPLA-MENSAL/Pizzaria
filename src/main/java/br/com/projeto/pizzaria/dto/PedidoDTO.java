@@ -1,7 +1,10 @@
 package br.com.projeto.pizzaria.dto;
 
+
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,6 +16,10 @@ public class PedidoDTO {
     private String observacao;
 
     private UsuarioDTO usuario;
+
+    private Boolean entrega;
+
+    private List<ItemDTO> item;
 
     public PedidoDTO(){
 

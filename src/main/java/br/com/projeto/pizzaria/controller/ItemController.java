@@ -11,13 +11,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/itens")
+@RequestMapping("/api/itens")
+@CrossOrigin(origins = "*")
 public class ItemController {
 
     @Autowired
     private ItemService itemService;
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<ItemDTO> criar(@RequestBody ItemDTO itemDTO){
         try{
             return ResponseEntity.ok(itemService.criar(itemDTO));
@@ -26,7 +27,7 @@ public class ItemController {
         }
     }
 
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<List<ItemDTO>> buscarTodos(){
         try{
             return ResponseEntity.ok(itemService.findAllItens());
@@ -54,9 +55,10 @@ public class ItemController {
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<String> deletar(@RequestParam("id") Long id){
+    public ResponseEntity<HttpStatus> deletar(@PathVariable("id") Long id){
         try{
-            return ResponseEntity.ok(itemService.deletar(id));
+            itemService.deletar(id);
+            return ResponseEntity.ok(HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

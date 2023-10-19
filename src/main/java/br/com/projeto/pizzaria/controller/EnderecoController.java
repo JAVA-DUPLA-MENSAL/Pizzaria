@@ -11,14 +11,15 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/api/endereco")
+@CrossOrigin(origins = "*")
 public class EnderecoController {
 
     @Autowired
     private EnderecoService enderecoService;
 
 
-    @PostMapping("/criar")
+    @PostMapping
     public ResponseEntity<EnderecoDTO> criar(@RequestBody final EnderecoDTO enderecoDTO){
         try{
             return  ResponseEntity.ok( enderecoService.criar(enderecoDTO));
@@ -27,7 +28,7 @@ public class EnderecoController {
         }
     }
 
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<List<EnderecoDTO>> buscarEnderecos(){
         try{
            return ResponseEntity.ok(enderecoService.findAllEnderecos());
@@ -37,7 +38,7 @@ public class EnderecoController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<EnderecoDTO> editar(@RequestParam("id") Long id,@RequestBody EnderecoDTO enderecoDTO){
+    public ResponseEntity<EnderecoDTO> editar(@PathVariable("id") Long id,@RequestBody EnderecoDTO enderecoDTO){
         try{
             return ResponseEntity.ok( enderecoService.editar(id,enderecoDTO));
         }catch (Exception e){

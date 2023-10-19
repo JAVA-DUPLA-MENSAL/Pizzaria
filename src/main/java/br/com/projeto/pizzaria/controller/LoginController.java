@@ -11,7 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/api/login")
+@CrossOrigin(origins = "*")
 public class LoginController {
 
     @Autowired

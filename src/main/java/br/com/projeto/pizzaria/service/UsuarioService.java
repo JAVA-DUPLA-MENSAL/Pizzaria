@@ -67,13 +67,13 @@ public class UsuarioService {
         return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuarioNew);
     }
 
-    public String deletar(Long id){
+    public UsuarioDTO deletar(Long id){
         Usuario usuarioBanco = usuarioRepository.findById(id).orElse(null);
 
         Assert.isTrue(usuarioBanco != null, "Usuario nao encontrado");
         usuarioRepository.delete(usuarioBanco);
 
-        return "usuario deletado";
+        return usuarioDTOConvert.convertUsuarioToUsuarioDTO(usuarioBanco);
     }
 
 }

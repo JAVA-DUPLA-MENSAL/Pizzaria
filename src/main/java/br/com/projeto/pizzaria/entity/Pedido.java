@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,15 @@ public class Pedido {
 
     @Column(name = "observacao")
     private String observacao;
+
+    @Column(name = "entrega")
+    private Boolean entrega;
+
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(name = "item_pedidos",
+      joinColumns = @JoinColumn(name = "pedido_fk"),
+      inverseJoinColumns = @JoinColumn(name = "item_fk"))
+    private List<Item> item;
 
     @ManyToOne
     @JoinColumn(name = "usuario_fk")

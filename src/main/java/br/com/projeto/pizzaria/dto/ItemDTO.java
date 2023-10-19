@@ -11,11 +11,13 @@ public class ItemDTO {
 
     private Long id;
 
-    private PedidoDTO pedidoDTO;
+    private List<PedidoDTO> pedido;
+
+    private String nome;
+
+    private boolean possuiSabores;
 
     private String tamanho;
-
-    private Boolean entrega;
 
     private List<SaboresDTO> sabores;
 
@@ -23,11 +25,10 @@ public class ItemDTO {
 
     }
 
-    public ItemDTO(Long id, PedidoDTO pedidoDTO, String tamanho, Boolean entrega, List<SaboresDTO> saboresDTO) {
+    public ItemDTO(Long id, List<PedidoDTO> pedidoDTO, String tamanho, Boolean entrega, List<SaboresDTO> saboresDTO) {
         this.id = id;
-        this.pedidoDTO = pedidoDTO;
+        this.pedido = pedidoDTO;
         this.tamanho = tamanho;
-        this.entrega = entrega;
         this.sabores = saboresDTO;
     }
 }

@@ -1,7 +1,10 @@
 package br.com.projeto.pizzaria.service;
 
+import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.dto.ItemDTO;
+import br.com.projeto.pizzaria.dto.PedidoDTO;
 import br.com.projeto.pizzaria.entity.Item;
+import br.com.projeto.pizzaria.entity.Pedido;
 import br.com.projeto.pizzaria.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,10 @@ public class ItemService {
     private ItemRepository itemRepository;
 
     @Autowired
-    private PedidoService pedidoService;
+    private UsuarioDTOConvert usuarioDTOConvert;
+
+//    @Autowired
+//    private PedidoService pedidoService;
 
     public ItemDTO criar(ItemDTO itemDTO){
         Item item = toItem(itemDTO);
@@ -67,10 +73,20 @@ public class ItemService {
         ItemDTO itemDTO = new ItemDTO();
 
         itemDTO.setId(item.getId());
-        itemDTO.setEntrega(item.getEntrega());
+        itemDTO.setNome(item.getNome());
         itemDTO.setTamanho(item.getTamanho());
-        itemDTO.setPedidoDTO(pedidoService.toPedidoDTO(item.getPedido()));
+        itemDTO.setPossuiSabores(item.isPossuiSabores());
+        //itemDTO.setPedidoDTO(pedidoService.toPedidoDTO(item.getPedido()));
 
+        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+
+//        if(item.getPedido() != null){
+//            for(int i = 0; i < item.getPedido().size(); i++){
+//                pedidoDTOList.add(toPedidoDTO(item.getPedido().get(i)));
+//            }
+//        }
+
+        itemDTO.setPedido(pedidoDTOList);
         return itemDTO;
     }
 
@@ -78,10 +94,63 @@ public class ItemService {
         Item item = new Item();
 
         item.setId(itemDTO.getId());
-        item.setEntrega(itemDTO.getEntrega());
+        item.setNome(itemDTO.getNome());
         item.setTamanho(itemDTO.getTamanho());
-        item.setPedido(pedidoService.toPedido(itemDTO.getPedidoDTO()));
+        item.setPossuiSabores(itemDTO.isPossuiSabores());
+        //item.setPedido(pedidoService.toPedido(itemDTO.getPedidoDTO()));
 
-        return item;
+        List<Pedido> pedidoList = new ArrayList<>();
+
+//        if(itemDTO.getPedidoDTO() != null){
+//            for(int i = 0; i< itemDTO.getPedidoDTO().size(); i++){
+//                pedidoList.add(toPedido(itemDTO.getPedidoDTO().get(i)));
+//            }
+//        }
+
+        //item.setPedido(pedidoList);
+        return item;    }
+
+
+    //FUNCOES DE TOPEDIDO E TOPEDIDODTO
+    public Pedido toPedido(PedidoDTO pedidoDTO){
+        Pedido pedido = new Pedido();
+
+        pedido.setId(pedidoDTO.getId());
+        pedido.setNome(pedidoDTO.getNome());
+        pedido.setObservacao(pedidoDTO.getObservacao());
+        pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuario()));
+
+
+
+        List<Item>  itemList = new ArrayList<>();
+
+        if(pedidoDTO.getItem() != null){
+            for(int i = 0; i < pedidoDTO.getItem().size(); i++){
+                itemList.add(toItem(pedidoDTO.getItem().get(i)));
+            }
+        }
+
+        pedido.setItem(itemList);
+        return pedido;
+    }
+
+    public PedidoDTO toPedidoDTO(Pedido pedido){
+        PedidoDTO pedidoDTO = new PedidoDTO();
+
+        pedidoDTO.setId(pedido.getId());
+        pedidoDTO.setNome(pedido.getNome());
+        pedidoDTO.setObservacao(pedido.getObservacao());
+        pedidoDTO.setUsuario(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
+
+        List<ItemDTO> itemsdump = new ArrayList<>();
+
+        if(pedido.getItem() != null){
+            for(int i = 0; i < pedido.getItem().size(); i++){
+                itemsdump.add(toItemDTO(pedido.getItem().get(i)));
+            }
+        }
+
+        pedidoDTO.setItem(itemsdump);
+        return pedidoDTO;
     }
 }

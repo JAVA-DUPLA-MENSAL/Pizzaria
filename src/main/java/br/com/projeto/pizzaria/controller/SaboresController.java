@@ -11,13 +11,14 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sabores")
+@RequestMapping("/api/sabores")
+@CrossOrigin(origins = "*")
 public class SaboresController {
 
     @Autowired
     private SaboresService saboresService;
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<SaboresDTO> criar (@RequestBody SaboresDTO saboresDTO){
         try{
             return ResponseEntity.ok(saboresService.criar(saboresDTO));
@@ -26,7 +27,7 @@ public class SaboresController {
         }
     }
 
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<List<SaboresDTO>> buscarTodos(){
         try{
             return ResponseEntity.ok(saboresService.findAllSabores());
@@ -45,7 +46,7 @@ public class SaboresController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<SaboresDTO> editar(@RequestParam("id")Long id, @RequestBody SaboresDTO saboresDTO){
+    public ResponseEntity<SaboresDTO> editar(@PathVariable("id")Long id, @RequestBody SaboresDTO saboresDTO){
         try{
             return ResponseEntity.ok(saboresService.editar(id,saboresDTO));
         }catch (Exception e){
@@ -54,9 +55,10 @@ public class SaboresController {
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<String> deletar(@RequestParam("id") Long id){
+    public ResponseEntity<HttpStatus> deletar(@PathVariable("id") Long id){
         try{
-            return ResponseEntity.ok(saboresService.deletar(id));
+            saboresService.deletar(id);
+            return ResponseEntity.ok(HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

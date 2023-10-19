@@ -81,7 +81,7 @@ class PizzariaApplicationTests {
 		List<Sabores> saboresList = new ArrayList<>();
 		saboresList.add(sabores);
 
-		Item item = new Item(1L,pedido,"Grande",true,saboresList);
+		Item item = new Item(1L,pedidoList,"Grande",true,saboresList);
 		List<Item> itemList = new ArrayList<>();
 		itemList.add(item);
 
@@ -202,12 +202,14 @@ class PizzariaApplicationTests {
 	void criarItem(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Pizza","Nenhuma observacao",usuarioDTO);
+		List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+		pedidoDTOList.add(pedidoDTO);
 		SaboresDTO saboresDTO = new SaboresDTO(1L, "Calabresa");
 
 		List<SaboresDTO> saboresDTOList = new ArrayList<>();
 		saboresDTOList.add(saboresDTO);
 
-		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTO,"Grande",true,saboresDTOList);
+		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTOList,"Grande",true,saboresDTOList);
 
 		var data = itemController.criar(itemDTO);
 
@@ -218,12 +220,14 @@ class PizzariaApplicationTests {
 	void editarItem(){
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Pizza","Nenhuma observacao",usuarioDTO);
+		List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+		pedidoDTOList.add(pedidoDTO);
 		SaboresDTO saboresDTO = new SaboresDTO(1L, "Calabresa");
 
 		List<SaboresDTO> saboresDTOList = new ArrayList<>();
 		saboresDTOList.add(saboresDTO);
 
-		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTO,"Pequeno",true,saboresDTOList);
+		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTOList,"Pequeno",true,saboresDTOList);
 
 		var data = itemController.editar(1L,itemDTO);
 
