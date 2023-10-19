@@ -28,6 +28,7 @@ public class EnderecoController {
         }
     }
 
+
     @GetMapping
     public ResponseEntity<List<EnderecoDTO>> buscarEnderecos(){
         try{
